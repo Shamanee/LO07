@@ -17,6 +17,8 @@ session_start();
         if($_SESSION['User_Type']=='parent')
         {
             echo"<h1>PARENT</h1>\n";
+            echo $_SESSION['prenom']." ".$_SESSION['nom']."<br/>\n";
+            echo "<a href=''>Modifier Profil</a><br/>\n";
         }else if($_SESSION['User_Type']=='nounou'){
             echo"<h1>NOUNOU</h1>\n";
         }else if($_SESSION['id']==1){
@@ -26,5 +28,6 @@ session_start();
             header('location: error403.html');
         }
         ?>
+        <a href="accueil.php">Retour</a>
     </body>
 </html>
