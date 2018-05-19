@@ -14,6 +14,7 @@ session_start();
     </head>
     <body>
         <?php
+        require './menu.php';
         //echo "bonjour";
         //var_dump($_SESSION);
         if(!isset($_SESSION['id'])){
@@ -25,9 +26,9 @@ session_start();
         }
         ?>
         
-        <ul>
+        <!--<ul>
             <?php
-            if($_SESSION['User_Type']=='parent'){
+            /*if($_SESSION['User_Type']=='parent'){
                 echo"<li><a href='reservation.php'>Réserver</a></li>\n";
                 echo"<li><a href='enfant.php'>Vos enfants</a></li>\n";
             }
@@ -36,11 +37,11 @@ session_start();
             <?php
             if($_SESSION['id']==1){
                 echo "<li><a href='administration.php'>Administration</a></li>\n";
-            }
+            }*/
             ?>
         </ul>
         <form method="post" action="deconnexion.php">
             <input type="submit" value="Déconnexion"/>
-        </form>
+        </form>-->
     </body>
 </html>
