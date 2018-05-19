@@ -4,6 +4,9 @@ To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
+<?php
+session_start();
+?>
 <html>
     <head>
         <meta charset="UTF-8">
@@ -11,6 +14,14 @@ and open the template in the editor.
         <title>Projet LO07</title>
     </head>
     <body>
+        <?php
+        if(isset($_SESSION['User_Type'])){
+            if($_SESSION['User_Type']=='parent'||$_SESSION['User_Type']=='nounou'||$_SESSION['User_Type']=='admin'){
+                echo "Vous etes déjà connecté";
+                header('Refresh:2; url=accueil.php');
+            }
+        }
+        ?>
         <form method='POST' action="connexion_traitement.php">
             <label>Email</label>
             <input type="text" name="email"/><br/>
