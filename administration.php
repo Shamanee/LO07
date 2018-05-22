@@ -18,6 +18,9 @@ session_start();
             header("location: error403.html");
         }
         ?>
+        <?php
+        include './menu.php';
+        ?>
         <h2>Liste Utilisateurs</h2>
         <table>
             <tr>

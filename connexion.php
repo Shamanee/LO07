@@ -20,7 +20,7 @@ session_start();
                 echo "Vous etes déjà connecté";
                 header('Refresh:2; url=accueil.php');
             }
-        }
+        }else{
         ?>
         <form method='POST' action="connexion_traitement.php">
             <label>Email</label>
@@ -30,5 +30,8 @@ session_start();
             <input type="submit" value="Connexion"/>
         </form>
         <p>Pas de compte ? <a href="inscription.php">Inscrivez-vous !</a></p>
+        <?php
+        }
+        ?>
     </body>
 </html>

@@ -36,5 +36,61 @@ if (isset($_POST['submit_photo'])) {
         }
     }
 }
+
+if(isset($_POST['submit_pass'])){
+    $verif=$bdd->prepare('SELECT password FROM utilisateur WHERE id=:id');
+    $verif->execute(array('id'=>$_SESSION['id']));
+    $resultat=$verif->fetch();
+    $isAncien_passCorrect= password_verify($_POST['ancien_password'], $resultat['password']);
+    if(isset($_POST['new_password'])&&($isAncien_passCorrect==TRUE)){
+        $pass=password_hash($_POST['new_password'],PASSWORD_DEFAULT);
+        $req_pass=$bdd->prepare('UPDATE utilisateur SET password= :password WHERE id= :id');
+        $req_pass->execute(array(
+            'password' => $pass,
+            'id' => $_SESSION['id'],
+        ));
+        echo 'Le mot de passe a été changé.';
+        header('Refresh:2; url=modification_profil.php');
+    }else if(!isset($_POST['new_password'])){
+        echo 'Veuillez saisir un nouveau mot de passe';
+        header('Refresh:2; url=modification_profil.php');
+    }else{
+        echo "L'ancien mot de passe saisi n'est pas bon.";
+        header('Refresh:2; url=modification_profil.php');
+    }
+}
+
+if(isset($_POST['submit_info'])){
+        $r=$bdd->prepare('UPDATE utilisateur SET information=:information WHERE id=:id');
+        $r->execute(array(
+            'information' => $_POST['information'],
+            'id' => $_SESSION['id'],
+        ));
+        if($_SESSION['User_Type']=='nounou'){
+            $r2=$bdd->prepare('UPDATE utilisateur SET experience=:experience WHERE id=:id');
+            $r2->execute(array(
+                'experience' => $_POST['experience'],
+                'id' => $_SESSION['id'],
+            ));
+        }
+        /*$requete=$bdd->prepare('SELECT information,experience FROM utilisateur WHERE id=:id');
+        $requete->execute(array('id'=>$_SESSION['id']));
+        $inf=$requete['information'];
+        $expe=$requete['experience'];
+        if($inf==''){
+            $requete2=$bdd->prepare('UPDATE utilisateur SET information=:information WHERE id=:id');
+            $requete2->execute(array(
+                'id'=>$_SESSION['id'],
+                'information'=>NULL,
+            ));
+        }
+        if($expe==''){
+            $requete3=$bdd->prepare('UPDATE utilisateur SET experience=:experience WHERE id=:id');
+            $requete3->execute(array(
+                'id'=>$_SESSION['id'],
+                'experience'=>NULL,
+            ));
+        }*/
+}
 ?>
 

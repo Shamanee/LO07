@@ -15,6 +15,9 @@ require './connex_bdd.php';
     </head>
     <body>
         <?php
+        include './menu.php';
+        ?>
+        <?php
         if($_SESSION['User_Type']=='parent')
         {
             echo"<h1>PARENT</h1>\n";
