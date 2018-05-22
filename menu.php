@@ -2,7 +2,7 @@
     <li><a href="accueil.php">Accueil</a></li>
     <?php
     if($_SESSION['User_Type']=='nounou'){
-        echo "<li><a href=''>Planning</a></li>\n";
+        echo "<li><a href='planning.php'>Planning</a></li>\n";
     }
     if($_SESSION['User_Type']=='parent'){
         echo "<li><a href=''>Reserver</a></li>\n";
