@@ -7,6 +7,8 @@
     if($_SESSION['User_Type']=='parent'){
         echo "<li><a href=''>Reserver</a></li>\n";
         echo "<li><a href='enfant.php'>Enfants</a></li>\n";
+    }else{
+        echo "<li><a href='administration.php'>Administration</a></li>\n";
     }
     ?>
     <li><a href="profil.php">Profil</a></li>

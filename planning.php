@@ -9,7 +9,7 @@ and open the template in the editor.
 session_start();
 require './connex_bdd.php';
 setlocale(LC_ALL, 'FR_fr');
-require './calendrier.php';
+require './Calendrier.php';
 $calendrier = new Calendrier();
 /*
   echo '<pre>';
