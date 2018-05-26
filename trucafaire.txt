@@ -1,0 +1,16 @@
+************** CHOSES A FAIRE *****************
+***********************************************
+*************    IMPORTANT    *****************
+***********************************************
+
+Supprimer planning.php
+Supprimer planning_test.php
+Supprimer Calendrier.php
+-> SEULEMENT SI planning_test2.php marche correctement (avec Month.php)
+
+Mettre en place la gestion des événement pour planning_test2.php
+
+
+***********************************************
+********* C'ETAIT LES TRUCS A FAIRE ***********
+***********************************************

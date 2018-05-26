@@ -13,7 +13,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
         <script>
 
-            $(document).ready(function () {
+            /*$(document).ready(function () {
                 var calendar = $('#calendar').fullCalendar({
                     editable: true,
                     header: {
@@ -98,7 +98,7 @@
                     },
 
                 });
-            });
+            });*/
 
         </script>
     </head>
@@ -106,9 +106,10 @@
         <br />
         <h2><a href="#">Votre Planning</a></h2>
         <br />
-        <div class="container">
+        <!--<div class="container">
             <div id="calendar"></div>
             IL FAUT AJOUTER DE QUOI METTRE DANS LES BASES DE DONNEES
-        </div>
+        </div>-->
+        
     </body>
 </html>
