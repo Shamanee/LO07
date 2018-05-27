@@ -4,7 +4,10 @@ To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
-<?php require './Month.php'; ?>
+<?php 
+require './Month.php';
+require './Prestation.php';
+?>
 <html>
     <head>
         <meta charset="UTF-8">
@@ -30,7 +33,14 @@ and open the template in the editor.
         } catch (Exception $e) {
             $month = new Month();
         }
-        $start = $month->getStartingDay()->modify('last monday');
+        $events = new Prestation();
+        $start = $month->getStartingDay();
+        $start = $start->format('N') === '1' ? $start : $month->getStartingDay()->modify('last monday');
+        $weeks = $month->getWeeks();
+        $end = (clone $start);
+        $end = $end->modify('+' . (6 + 7 * ($weeks-1)) . ' days');
+        $events = $events->getPrestationBetween($start, $end);
+        var_dump($events);
         
         ?>
         <div class="d-flex flex-row align-items-center justify-content-between mx-sm-2">
@@ -41,8 +51,8 @@ and open the template in the editor.
         </div>
         </div>
         
-        <table class="calendar__table calendar__table--<?= $month->getWeeks(); ?>weeks">
-            <?php for($i = 0;$i < $month->getWeeks(); $i++){?>
+        <table class="calendar__table calendar__table--<?= $weeks; ?>weeks">
+            <?php for($i = 0;$i < $weeks; $i++){?>
             <tr>
                 <?php foreach($month->days as $k => $day){
                     $start2 = clone $start;
