@@ -15,10 +15,23 @@
 class Prestation {
     public function getPrestationBetween ($start,$end){
         require './connex_bdd.php';
-        //$sql = "SELECT * FROM prestation WHERE start BETWEEN '{$start->format('Y-m-d 00:00:00')}' AND '{$end->format('Y-m-d 23:59:59')}";
-        //$req=$bdd->query("SELECT * FROM prestation WHERE fin_datetime BETWEEN '{$start->format('Y-m-d 00:00:00')}' AND '{$end->format('Y-m-d 23:59:59')}");
-        $req=$bdd->query("SELECT * FROM prestation WHERE fin_datetime = '13:00:00'");
+        $sql = "SELECT * FROM prestation WHERE debut_datetime BETWEEN '{$start->format('Y-m-d 00:00:00')}' AND '{$end->format('Y-m-d 23:59:59')}'";
+        $req=$bdd->query($sql);
         $res=$req->fetchall();
         return $res;
+    }
+    
+    public function getPrestationBetweenByDay($start,$end){
+        $events=$this->getPrestationBetween($start, $end);
+        $days = [];
+        foreach ($events as $event){
+            $date = explode(' ',$event['debut_datetime'])[0];
+            if(!isset($days[$date])){
+                $days[$date] = [$event];
+            }else{
+                $days[$date][] = $events;
+            }
+        }
+        return $days;
     }
 }
