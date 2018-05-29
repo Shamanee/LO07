@@ -1,5 +1,5 @@
 <?php
-require './connex_bdd.php';
+require './bdd/connex_bdd.php';
 //Rajouter les if isset
 $type=$_POST['type'];
 $nom=$_POST['nom'];

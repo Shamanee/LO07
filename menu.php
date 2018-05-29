@@ -4,7 +4,7 @@
     if($_SESSION['User_Type']=='nounou'){
         echo "<li><a href='planning.php'>Planning</a></li>\n";
     }
-    if($_SESSION['User_Type']=='parent'){
+    else if($_SESSION['User_Type']=='parent'){
         echo "<li><a href=''>Reserver</a></li>\n";
         echo "<li><a href='enfant.php'>Enfants</a></li>\n";
     }else{

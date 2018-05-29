@@ -1,6 +1,6 @@
 <?php
 session_start();
-require './connex_bdd.php';
+require './bdd/connex_bdd.php';
 $target_dir = "photo/";
 $uploadOk = 1;
 //var_dump($_FILES);

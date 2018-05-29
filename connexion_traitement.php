@@ -1,5 +1,5 @@
 <?php
-require './connex_bdd.php';
+require './bdd/connex_bdd.php';
 $req=$bdd->prepare('SELECT id, nom, prenom, password, User_Type FROM utilisateur WHERE email = :email');
 $req->execute(array(
     'email' => $_POST['email']));

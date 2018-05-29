@@ -1,5 +1,5 @@
 <?php
-require './connex_bdd.php';
+require './bdd/connex_bdd.php';
 session_start();
 $prenom=$_POST['prenom'];
 $date_naissance=$_POST['date_naissance'];

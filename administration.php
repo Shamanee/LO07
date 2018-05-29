@@ -30,7 +30,7 @@ session_start();
                 <th>Email</th>
             </tr>
             <?php
-            require './connex_bdd.php';
+            require './bdd/connex_bdd.php';
             $requete=$bdd->query('SELECT User_Type, prenom,nom,email FROM utilisateur');
             while($donnees=$requete->fetch()){
                 echo "<tr>\n\t<td>".$donnees['User_Type']."</td>\n<td>".$donnees['prenom']."</td>\n<td>".$donnees['nom']."</td>\n<td>".$donnees['email']."</td>\n</tr>";

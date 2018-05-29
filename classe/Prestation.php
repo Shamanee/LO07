@@ -14,7 +14,7 @@
 
 class Prestation {
     public function getPrestationBetween ($start,$end){
-        require './connex_bdd.php';
+        require '../bdd/connex_bdd.php';
         $sql = "SELECT * FROM prestation WHERE debut_datetime BETWEEN '{$start->format('Y-m-d 00:00:00')}' AND '{$end->format('Y-m-d 23:59:59')}'";
         $req=$bdd->query($sql);
         $res=$req->fetchall();

@@ -5,9 +5,9 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <?php 
-require './Month.php';
-require './Prestation.php';
-require './connex_bdd.php';
+require '../classe/Month.php';
+require '../classe/Prestation.php';
+require '../bdd/connex_bdd.php';
 ?>
 <html>
     <head>
@@ -17,7 +17,7 @@ require './connex_bdd.php';
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-        <link rel="stylesheet" href="calendar.css"/>
+        <link rel="stylesheet" href="../css/calendar.css"/>
     </head>
     <body>
         <?php

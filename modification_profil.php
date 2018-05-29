@@ -6,7 +6,7 @@ and open the template in the editor.
 -->
 <?php
 session_start();
-require './connex_bdd.php';
+require './bdd/connex_bdd.php';
 ?>
 <html>
     <head>
