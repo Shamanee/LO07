@@ -16,7 +16,7 @@ session_start();
     <body>
         <?php
         if(isset($_SESSION['User_Type'])){
-            if($_SESSION['User_Type']=='parent'||$_SESSION['User_Type']=='nounou'||$_SESSION['User_Type']=='admin'){
+            if($_SESSION['User_Type']=='parent'||$_SESSION['User_Type']=='nounou'||$_SESSION['User_Type']=='admin'||$_SESSION['User_Type']=='pending'){
                 echo "Vous etes déjà connecté";
                 header('Refresh:2; url=accueil.php');
             }

@@ -10,6 +10,11 @@ Supprimer Calendrier.php
 
 Mettre en place la gestion des événement pour planning_test2.php
 -> Corriger Prestation.php
+-> Compléter events.php
+
+Administration
+->Gérer l'acceptation ou le refus d'une nounou
+	(Faire en sorte que chaque ligne soit traitée au lieu de toutes les lignes)
 
 
 ***********************************************

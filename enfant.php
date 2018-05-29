@@ -28,7 +28,7 @@ session_start();
                 <th>Date Naissance</th>
             </tr>
             <?php
-            require './connex_bdd.php';
+            require './bdd/connex_bdd.php';
             $requete=$bdd->prepare('SELECT Prenom, Date_Naissance FROM enfant WHERE utilisateur_id = ?');
             $requete->execute(array($_SESSION['id']));
             while($donnees=$requete->fetch()){

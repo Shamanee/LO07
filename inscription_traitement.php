@@ -1,7 +1,11 @@
 <?php
 require './bdd/connex_bdd.php';
 //Rajouter les if isset
-$type=$_POST['type'];
+if(isset($_POST['type'])){
+    if ($_POST['type'] == 'nounou'){
+        $type='pending';
+    }
+}
 $nom=$_POST['nom'];
 $prenom=$_POST['prenom'];
 $ville=$_POST['ville'];
