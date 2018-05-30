@@ -1,4 +1,8 @@
 <?php
+/**
+ * On regarde si l'email fourni est dans la base de données.
+ * Avec cet email, on va regarder le mot de passe associé et on vérifie si ce dernier est le meme que celui saisi
+ */
 require './bdd/connex_bdd.php';
 $req=$bdd->prepare('SELECT id, nom, prenom, password, User_Type FROM utilisateur WHERE email = :email');
 $req->execute(array(
@@ -6,12 +10,16 @@ $req->execute(array(
 $resultat = $req->fetch();
 
 $isPasswordCorrect = password_verify($_POST['password'], $resultat['password']);
-var_dump($_POST['password']);
-var_dump($resultat['password']);
-var_dump($isPasswordCorrect);
 
+/**
+ * S'il y a eu un problème dans l'envoie des informations de la base de données,
+ * On affiche un message
+ * Si le mot de passe est correct, on crée une session avec tous les renseignements nécessaire de la session
+ * Sinon on indique à l'utilisateur que son identifiant est mauvais
+ */
 if(!$resultat){
-    echo "Oui, ca marche pas";
+    echo "Erreur dans la communication des données avec la DataBase";
+    header('Refresh:2,url=connexion.php');
 }else{
     if($isPasswordCorrect){
         session_start();
@@ -29,7 +37,9 @@ if(!$resultat){
 
 
 $req->closeCursor();
-
+/**
+ * Si une session a reussi a etre créée, on redirige l'utilisateur sur la page d'accueil
+ */
 if (isset($_SESSION['id'])){
     header("location: accueil.php");
     exit();

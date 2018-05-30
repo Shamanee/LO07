@@ -5,6 +5,11 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <?php
+/**
+ * Page pour avoir les détail d'une Prestation
+ * On passe directement dans l'url l'id de la prestation pour avoir les details de cette dernière
+ * Si cette prestation n'est pas trouvée, on renvoie la page de l'erreur404
+ */
 require './debug.php';
 require '../classe/Prestation.php';
 require '../bdd/connex_bdd.php';

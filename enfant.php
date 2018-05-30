@@ -14,6 +14,9 @@ session_start();
     </head>
     <body>
         <?php
+        /**
+         * Si l'utilisateur n'est pas un parent, on lui affiche qu'il n'a pas les droits d'accéder à la page avec un Erreur403
+         */
         if($_SESSION['User_Type']!='parent'){
             header('location: error403.html');
         }
@@ -28,6 +31,10 @@ session_start();
                 <th>Date Naissance</th>
             </tr>
             <?php
+            /**
+             * On fait une requete à la base de données pour récupérer les enfants de l'utilisateur
+             * Les enfants seront ensuite affichés dans un tableau
+             */
             require './bdd/connex_bdd.php';
             $requete=$bdd->prepare('SELECT Prenom, Date_Naissance FROM enfant WHERE utilisateur_id = ?');
             $requete->execute(array($_SESSION['id']));

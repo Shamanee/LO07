@@ -1,4 +1,8 @@
 <?php
+/**
+ * On ajoute les enfants dans la base de données les enfants ajoutés à l'aide du formulaire
+ * Puis on redirige l'utilisateur sur la page enfant.php
+ */
 require './bdd/connex_bdd.php';
 session_start();
 $prenom=$_POST['prenom'];

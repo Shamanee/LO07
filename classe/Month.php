@@ -7,7 +7,7 @@
  */
 
 /**
- * Description of Month
+ * Description of Month : Un mois complet pour le calendrier contenant toutes les semaines de ce mois ainsi que tout les jours
  *
  * @author Timothée
  */
@@ -19,6 +19,11 @@ class Month {
     public $month;
     public $year;
     
+    /**
+     * Permet de définir le numéro du mois et l'année que l'on veut donner au calendrier
+     * @param type $month
+     * @param type $year
+     */
     public function __construct($month = null, $year = null) {
         if($month === NULL || $month < 1 || $month > 12){
             $month = intval(date('m'));
@@ -30,15 +35,26 @@ class Month {
         $this->year = $year;
     }
     
+    /**
+     * Permet d'obtenir le premier jour d'un mois
+     * @return \DateTime
+     */
     public function getStartingDay(){
         return new DateTime("{$this->year}-{$this->month}-01");
     }
 
-
+    /**
+     * Permet de renvoyer une chaine de caractère avec le mois et l'année du calendrier
+     * @return type string
+     */
     public function toString() {
         return $this->months[$this->month - 1] . ' ' . $this->year;
     }
     
+    /**
+     * Permet d'obtenir le nombre de semaine dans un mois
+     * @return type int
+     */
     public function getWeeks(){
         $start = $this->getStartingDay();
         $end = clone $start;
@@ -50,10 +66,19 @@ class Month {
         return $weeks;
     }
     
+    /**
+     * Permet de renvoyer une date sous la form Année-Mois
+     * @param type $date
+     * @return type Date
+     */
     public function  withinMonth($date){
         return $this->getStartingDay()->format('Y-m') === $date->format('Y-m');
     }
     
+    /**
+     * Permet de passer au mois suivant
+     * @return \Month
+     */
     public function nextMonth(){
         $month = $this->month + 1;
         $year = $this->year;
@@ -64,6 +89,10 @@ class Month {
         return new Month($month,$year);
     }
     
+    /**
+     * Permet de passer au mois précédent
+     * @return \Month
+     */
     public function previousMonth(){
         $month = $this->month - 1;
         $year = $this->year;

@@ -1,4 +1,12 @@
 <?php
+/**
+ * Fichier de connexion a la base de données
+ * Contient le nom d'utilisateur de phpMyAdmin
+ *              mot de passe de phpMyAdmin
+ *              Nom de la base de donnée sur phpMyAdmin
+ * Et on se connecte à la base de données.
+ * Si cela ne marche pas, on affiche une erreur à l'utilisateur
+ */
 $user='root';
 $password='';
 $dataSourceName='mysql:host=localhost;dbname=projetlo07db';

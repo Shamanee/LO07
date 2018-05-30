@@ -15,6 +15,9 @@ session_start();
     </head>
     <body>
         <?php
+        /**
+         * Si l'utilisateur est déjà connecté, on lui indique qu'il l'est déjà, puis on le redirige vers la page d'accueil.
+         */
         if(isset($_SESSION['User_Type'])){
             if($_SESSION['User_Type']=='parent'||$_SESSION['User_Type']=='nounou'||$_SESSION['User_Type']=='admin'||$_SESSION['User_Type']=='pending'){
                 echo "Vous etes déjà connecté";

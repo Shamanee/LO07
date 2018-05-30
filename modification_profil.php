@@ -5,6 +5,10 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <?php
+/**
+ * Differents formulaires pour modifier le profil d'un utilisateur
+ *      L'utilisateur peut donc modifier sa photo de profil, son mot de passe et ses informations
+ */
 session_start();
 require './bdd/connex_bdd.php';
 ?>
@@ -38,6 +42,9 @@ require './bdd/connex_bdd.php';
             <label>Information</label>
             <textarea name="information">
                 <?php
+                /**
+                 * Requete a la base de données pour ajouter les informations modifiées dans le tuple correspondant a l'utilisteur
+                 */
                 $req=$bdd->prepare('SELECT information FROM utilisateur WHERE id=:id');
                 $req->execute(array('id'=>$_SESSION['id']));
                 $info=$req->fetch();
@@ -45,6 +52,10 @@ require './bdd/connex_bdd.php';
                 ?>
             </textarea><br/>
             <?php
+            /**
+             * Si l'utilisateur est une nounou, elle pourra modifier son expérience
+             * Un textarea apparait donc dans le formulaire
+             */
             if($_SESSION['User_Type']=='nounou'){
                 $r=$bdd->prepare('SELECT experience FROM utilisateur WHERE id=:id');
                 $r->execute(array('id'=>$_SESSION['id']));

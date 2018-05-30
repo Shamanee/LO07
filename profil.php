@@ -5,6 +5,11 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <?php
+/**
+ * Page de profil d'un utilisateur ou il pourra voir des détails sur lui
+ * Accéder a la modification de son profil
+ * Pour une nounou, elle pourra consulter les heures effectuées durant une période ainsi que son revenu (A FAIRE)
+ */
 session_start();
 require './bdd/connex_bdd.php';
 ?>
@@ -18,6 +23,9 @@ require './bdd/connex_bdd.php';
         include './menu.php';
         ?>
         <?php
+        /**
+         * On vérifie le type d'utilisateur, si ce n'est pas un utilisateur renseigné/connecté, on lui indique une erreur403 avec un acces interdit a la page
+         */
         if($_SESSION['User_Type']=='parent')
         {
             echo"<h1>PARENT</h1>\n";
@@ -33,6 +41,10 @@ require './bdd/connex_bdd.php';
         }
         ?>
         <?php
+        /**
+         * On charge la photo de profil de l'utilisateur
+         * Si celui-ci n'en a pas, une photo de profil par défaut est mise en place
+         */
         $photoprofil=$bdd->prepare('SELECT photo FROM utilisateur WHERE id=:id');
         $photoprofil->execute(array('id'=>$_SESSION['id']));
         

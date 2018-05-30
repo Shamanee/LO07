@@ -5,6 +5,9 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <?php
+/**
+ * On ouvre une session on appelle la connexion à la Base de Données
+ */
 session_start();
 require './bdd/connex_bdd.php';
 ?>
@@ -16,6 +19,10 @@ require './bdd/connex_bdd.php';
     </head>
     <body>
         <?php
+        /**
+         * On empeche les personnes qui n'ont pas le compte admin d'accéder à la page administration
+         * En les renvoyant sur une page erreur403 qui indique "Interdit"
+         */
         if ($_SESSION['id'] != 1) {
             header("location: error403.html");
         }
@@ -33,6 +40,9 @@ require './bdd/connex_bdd.php';
                 <th>Ville</th>
             </tr>
             <?php
+            /**
+             * On effectue une requete pour avoir tous les utilisateur du site, et on les affiche dans un tableau (en excluant l'administrateur du site)
+             */
             $requete = $bdd->query('SELECT User_Type, prenom,nom,email,ville FROM utilisateur');
             while ($donnees = $requete->fetch()) {
                 if ($donnees['User_Type'] != 'admin') {
@@ -43,6 +53,11 @@ require './bdd/connex_bdd.php';
             ?>
         </table>
         <?php
+        /**
+         * On fait une requete pour savoir les nounous qui sont dans l'attente d'acceptation (User_Type = pending)
+         * Si la requete est vide, on n'affiche rien
+         * Si elle ne l'est pas, on affiche un tableau contenant les informations sur les nounous à valider
+         */
         $sql = "SELECT prenom,nom,ville,date_naissance,experience,information FROM utilisateur WHERE User_Type = 'pending'";
         $r = $bdd->query($sql);
         $res = $r->fetchAll();
@@ -70,6 +85,9 @@ require './bdd/connex_bdd.php';
                 <input type='submit' class='button' name='cross' value='&cross;' onclick=\"return confirm('Vous allez refuser cette personne, êtes vous sûr ?');\"/>
                 </form>    
                 </td>";
+                /**
+                 * On fait un formulaire pour traiter les demdandes. Une confirmation (avec un pop-up) sera demander à l'admin pour valider son choix
+                 */
             }
             ?>
         </tr>

@@ -10,10 +10,14 @@ session_start();
 <html>
     <head>
         <meta charset="UTF-8">
-        <title></title>
+        <title>Accueil</title>
     </head>
     <body>
         <?php
+        /**
+         * Ici, on regarde si une idée a été définie. Si ce n'est pas le cas, on renvoie à l'écran de connexion.
+         * Si c'est bon, on affiche le menu en rapport avec le type d'utilisateur de la session.
+         */
         //var_dump($_SESSION);
         if(!isset($_SESSION['id'])){
             header('location: connexion.php');

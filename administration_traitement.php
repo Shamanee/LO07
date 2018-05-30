@@ -5,7 +5,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
+/**
+ * Quand l'admin utilise un des boutons pour valider la nounou (ou non)
+ * On va regarder son choix
+ */
 if (isset($_POST)){
             if (isset($_POST['check'])) {
                 valider();
@@ -13,15 +16,20 @@ if (isset($_POST)){
                 refuser();
             }
         }
-
+        /**
+         * Valider va modifier le User_Type de la nounou de pending a nounou
+         */
         function valider() {
+            
             require './bdd/connex_bdd.php';
             $value = verif_bdd();
             echo "La nounou a été validée.";
             $req=$bdd->prepare("UPDATE utilisateur SET User_Type = 'nounou' WHERE User_Type = 'pending' AND id = :id");
             $req->execute(array('id'=>$value));            
         }
-
+        /**
+         * Refuser va supprimer la demander ainsi que l'utilisateur de la base de données
+         */
         function refuser() {
             require './bdd/connex_bdd.php';
             $value = verif_bdd();
@@ -29,7 +37,10 @@ if (isset($_POST)){
             $req = $bdd->prepare("DELETE FROM utilisateur WHERE id = :id");
             $req->execute(array('id'=>$value));
         }
-        
+        /**
+         * Appelle à la base de données pour avoir l'id des nounous candidates
+         * @return type int;
+         */
         function verif_bdd(){
             require './bdd/connex_bdd.php';
             $requete=$bdd->query("SELECT id FROM utilisateur WHERE User_Type = 'pending'");
