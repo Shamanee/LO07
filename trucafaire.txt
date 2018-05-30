@@ -3,6 +3,12 @@
 *************    IMPORTANT    *****************
 ***********************************************
 
+Peut etre séparer les 2 formulaires
+
+NOUNOU :
+
+Après le formulaire, faire en sorte que la nounou puisse dire ses disponibilités
+
 Supprimer planning.php
 Supprimer planning_test.php
 Supprimer Calendrier.php
@@ -12,9 +18,20 @@ Mettre en place la gestion des événement pour planning_test2.php
 -> Corriger Prestation.php
 -> Compléter events.php
 
-Administration
-->Gérer l'acceptation ou le refus d'une nounou
-	(Faire en sorte que chaque ligne soit traitée au lieu de toutes les lignes)
+PARENT :
+Pouvoir reserver une garde (peu importe laquelle)
+-> TOUT A FAIRE
+
+
+ADMINISTRATION :
+Compter le nombre d'inscription de nounous (en demande + inscrite)
+Savoir le chiffre d'affaire (Mois, trimestre, année)
+Possibilité d'accéder à tous les profil des nounous (liste prestations, evaluations, revenus)
+Pouvoir lister les nounous par revenus
+Pouvoir bloquer l'activiter d'une nounou temporairement
+-> Passer le User_Type en 'blocked'
+
+
 
 
 ***********************************************
