@@ -5,6 +5,11 @@
 
 Peut etre séparer les 2 formulaires
 
+BASE DE DONNEES :
+
+Prestation : Mettre l'id du parent qui réserve et id de la nounou qui va faire la prestation
+Revoir toutes les tables pour vérifier
+
 NOUNOU :
 
 Après le formulaire, faire en sorte que la nounou puisse dire ses disponibilités
