@@ -14,13 +14,12 @@ session_start();
     </head>
     <body>
         <?php
-        require './menu.php';
-        //echo "bonjour";
         //var_dump($_SESSION);
         if(!isset($_SESSION['id'])){
             header('location: connexion.php');
             exit;
         }else{
+            require './menu.php';
             echo "Bonjour ".$_SESSION['prenom']." ".$_SESSION['nom']."<br/>\n\t\t";
             echo "Bienvenue sur super-nounou.fr<br/>\n";
         }

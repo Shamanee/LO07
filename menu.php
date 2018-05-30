@@ -20,6 +20,4 @@
         echo "<br/>\nVous etes en attente d'acceptation. Un administrateur s'occupe de vous.<br/>\n";
     }
     ?>
-    
-    
 </ul>
