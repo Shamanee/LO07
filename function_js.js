@@ -10,3 +10,4 @@
 function test(){
     alert("C'est inutile");
 }
+
