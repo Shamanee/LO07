@@ -38,7 +38,7 @@ Pouvoir bloquer l'activiter d'une nounou temporairement
 
 
 
-
+Corriger toutes les boucles/conditions dont les balises sont fermée (mettre des endfor;/endif; ...)
 ***********************************************
 ********* C'ETAIT LES TRUCS A FAIRE ***********
 ***********************************************

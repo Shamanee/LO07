@@ -23,7 +23,7 @@ if ($_SESSION['User_Type'] = !'nounou') {
     </head>
     <body>
         <h2>Vos disponibilités</h2>
-        <form method="POST" action="">
+        <form method="POST" action="dispo_form.php">
             <label>Choix des jours de disponibilité</label><br/>
             <?php
             $jours = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
@@ -39,19 +39,23 @@ if ($_SESSION['User_Type'] = !'nounou') {
                 <?php
             endforeach;
             ?>
-
+            <input type="submit" value="envoyer"/><br/>
         </form>
+        
+        <?php
+        var_dump($_POST);
+        ?>
         <script>
             $(".jour").on('click', function () {
                 var jour = $(this).attr('id');
                 if ($(this).is(':checked')) {
                     //$('#heure_deb_' + jour).show();
                     //$('#heure_fin_' + jour).show();
-                    $('#dispo_' + jour).show();
+                    $('#dispo_' + jour).fadeIn();
                 } else {
                     //$('#heure_deb_' + jour).hide();
                     //$('#heure_fin_' + jour).hide();
-                    $('#dispo_' + jour).hide();
+                    $('#dispo_' + jour).fadeOut();
                 }
             });
         </script>
