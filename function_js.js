@@ -11,9 +11,13 @@ function test(){
     alert("C'est inutile");
 }
 
-function premiere_co_nounou(){
+function premiere_co_nounou_dispo(){
     window.location = 'dispo_form.php';
     alert("C'est votre première connexion. Veuillez saisir vos disponibilités.");
-    
+}
+
+function premiere_co_nounou_langue(){
+    window.location = 'langue_form.php';
+    alert("Veuillez maintenant saisir les langues que vous parlez.");
 }
 

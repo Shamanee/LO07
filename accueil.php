@@ -29,9 +29,16 @@ session_start();
                 $re = $bdd->query("SELECT COUNT(jour) FROM disponibilite WHERE utilisateur_id='" . $_SESSION['id'] . "'");
                 $res = $re->fetchAll();
                 var_dump($res[0]);
+                $req = $bdd->query("SELECT COUNT(*) FROM utilisateur_has_langue WHERE utilisateur_id='".$_SESSION['id']."'");
+                $resu=$req->fetchAll();
+                var_dump($resu);
                 if ($res[0][0] == '0') {
-                    echo '<script>premiere_co_nounou()</script>';
+                    echo '<script>premiere_co_nounou_dispo()</script>';
                 }
+                if ($resu[0][0]=='0'){
+                    echo '<script>premiere_co_nounou_langue()</script>';
+                }
+                
             }
             require './menu.php';
             echo "Bonjour " . $_SESSION['prenom'] . " " . $_SESSION['nom'] . "<br/>\n\t\t";

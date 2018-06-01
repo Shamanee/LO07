@@ -6,11 +6,13 @@ and open the template in the editor.
 -->
 <?php
 session_start();
-//if ($_SESSION['User_Type'] !== 'nounou') {
-////    header('Location:error403.html');
-//}
+require './bdd/connex_bdd.php';
+if ($_SESSION['User_Type'] !== 'nounou') {
+    header('Location:error403.html');
+}
 
 var_dump($_SESSION);
+$jours = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
 ?>
 <html>
     <head>
@@ -25,11 +27,36 @@ var_dump($_SESSION);
     </head>
     <body>
         <?php require './menu.php'; ?>
-        <h2>Vos disponibilités</h2>
+        <h2>Vos disponibilités (Générales)</h2>
+        
+        <?php 
+            if ($_SESSION['User_Type'] === 'nounou') {
+                $re = $bdd->query("SELECT COUNT(jour) FROM disponibilite WHERE utilisateur_id='" . $_SESSION['id'] . "'");
+                $res = $re->fetchAll();
+                if ($res[0][0] !== '0') {
+                    ?>
+        <table>
+            <tr>
+                <th></th>
+                <th>Heure début</th>
+                <th>Heure fin</th>
+            </tr>
+                <?php foreach($jours as $k=>$jour){
+                    $r=$bdd->query("SELECT Debut,Fin FROM disponibilite WHERE utilisateur_id='".$_SESSION['id']."' AND jour=$k");
+                    $result=$r->fetch();
+                    echo "<tr>\n<th>$jour</th>\n<td>".$result['Debut']."</td>\n<td>".$result['Fin']."</td>\n</tr>\n";
+                }?>
+        </table>
+        <br/>   
+        <?php
+                }
+            }
+        ?>
+        
         <form method="POST" action="dispo_form_traitement.php">
             <label>Choix des jours de disponibilité</label><br/>
             <?php
-            $jours = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
+            
             foreach ($jours as $jour):
                 echo "<input type='checkbox' class='jour' name='" . $jour . "' value='" . $jour . "' id='" . $jour . "'/><label for='" . $jour . "'>" . $jour . "</label><br/>\n";
                 ?>

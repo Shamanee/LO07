@@ -12,8 +12,6 @@ Revoir toutes les tables pour vérifier
 
 NOUNOU :
 
-Check les dispo déjà misent en place pour soit proposer la modification soit indiquer qu'il y a une dispo pour le jour
-
 Supprimer planning.php
 Supprimer planning_test.php
 Supprimer Calendrier.php
@@ -42,3 +40,20 @@ Corriger toutes les boucles/conditions dont les balises sont fermée (mettre des 
 ***********************************************
 ********* C'ETAIT LES TRUCS A FAIRE ***********
 ***********************************************
+
+Liste de ce qui a été fait :
+-Inscription/Connexion/Deconnexion
+-Accueil/Menu
+-Profil
+	->Photo
+	->Modification de profil
+-Administration
+	->Voir les inscrits sur le site
+	->Recrutement des nounous
+-Nounou
+	->Disponibilités
+	->Langues parlées
+	->Experience/Infos (dans le profil)
+	->Début de planning (non-fonctionnel)
+-Parent
+	->Ajouter des enfants
