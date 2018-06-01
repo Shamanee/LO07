@@ -15,6 +15,7 @@ session_start();
     </head>
     <body>
         <?php
+        var_dump($_SESSION);
         /**
          * Si l'utilisateur est déjà connecté, on lui indique qu'il l'est déjà, puis on le redirige vers la page d'accueil.
          */

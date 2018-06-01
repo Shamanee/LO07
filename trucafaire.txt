@@ -12,7 +12,7 @@ Revoir toutes les tables pour vérifier
 
 NOUNOU :
 
-Après le formulaire, faire en sorte que la nounou puisse dire ses disponibilités
+Check les dispo déjà misent en place pour soit proposer la modification soit indiquer qu'il y a une dispo pour le jour
 
 Supprimer planning.php
 Supprimer planning_test.php

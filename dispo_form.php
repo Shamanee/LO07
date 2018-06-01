@@ -6,9 +6,11 @@ and open the template in the editor.
 -->
 <?php
 session_start();
-if ($_SESSION['User_Type'] = !'nounou') {
-    header('Location:error403.html');
-}
+//if ($_SESSION['User_Type'] !== 'nounou') {
+////    header('Location:error403.html');
+//}
+
+var_dump($_SESSION);
 ?>
 <html>
     <head>
@@ -22,8 +24,9 @@ if ($_SESSION['User_Type'] = !'nounou') {
         </style>
     </head>
     <body>
+        <?php require './menu.php'; ?>
         <h2>Vos disponibilités</h2>
-        <form method="POST" action="dispo_form.php">
+        <form method="POST" action="dispo_form_traitement.php">
             <label>Choix des jours de disponibilité</label><br/>
             <?php
             $jours = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
@@ -41,10 +44,7 @@ if ($_SESSION['User_Type'] = !'nounou') {
             ?>
             <input type="submit" value="envoyer"/><br/>
         </form>
-        
-        <?php
-        var_dump($_POST);
-        ?>
+
         <script>
             $(".jour").on('click', function () {
                 var jour = $(this).attr('id');

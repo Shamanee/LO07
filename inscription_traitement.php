@@ -57,11 +57,11 @@ $bdd->exec("INSERT INTO utilisateur (User_Type, password, email, nom, prenom, vi
   var_dump($donnees);
   }
   $req->closeCursor(); */
-//if ($_POST['type'] === 'nounou') {
-//    header('Location:dispo_form.php');
-//} else {
+if ($_POST['type'] === 'nounou') {
+    header('Location:dispo_form.php');
+} else {
     echo "Vous allez être redirigé vers la page de connexion";
     header('Refresh:2; url=connexion.php');
-//    }
+    }
     ?>
 
