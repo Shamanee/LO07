@@ -29,7 +29,7 @@ require'./views/header.php';
 
 <h1>Garde numero <?= $event->getId();?></h1>
 <?php // ajouter le nom de l'enfant et de la nourrice dans la garde
-    $utilisateurId = $event->getUtilisateur_id();
+    $utilisateurId = $event->getParent_id();
     $sql = "SELECT nom,prenom FROM utilisateur WHERE id = $utilisateurId";
     $statement = $bdd->query($sql);
     $res = $statement->fetchAll();?>

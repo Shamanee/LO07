@@ -11,6 +11,10 @@ and open the template in the editor.
  * Si c'est le cas, on va au mois et a l'année correspondant
  * Sinon, ça prend la valeur NULL et on dirige l'utilisateur sur le mois actuel
  */
+session_start();
+if ($_SESSION['User_Type']!=='nounou'){
+    header('Location:../error403.html');
+}
 require '../classe/Month.php';
 require '../classe/Prestation.php';
 require '../bdd/connex_bdd.php';
@@ -51,6 +55,9 @@ require'./views/header.php';
 ?>
 <div class="d-flex flex-row align-items-center justify-content-between mx-sm-2">
     <h1><?= $month->toString(); ?></h1>
+    <div class="menu">
+        <?php require './menu_test.php';?>
+    </div>
     <div>
         <a href="planning_test2.php?month=<?= $month->previousMonth()->month; ?>&year=<?= $month->previousMonth()->year; ?>" class="btn btn-primary">&lt;</a>
         <a href="planning_test2.php?month=<?= $month->nextMonth()->month; ?>&year=<?= $month->nextMonth()->year; ?>"class="btn btn-primary">&gt;</a>
@@ -77,8 +84,9 @@ require'./views/header.php';
                 } else {
                     $eventsForDay = [];
                 };
+                $isToday = date('Y-m-d') === $date->format('Y-m-d');
                 ?>
-                <td class="<?= $month->withinMonth($date) ? '' : 'calendar__othermonth'; ?>">
+                <td class="<?= $month->withinMonth($date) ? '' : 'calendar__othermonth'; ?> <?= $isToday ? 'is-today' : ''; ?>">
                     <?php if ($i === 0) { ?>
                         <div class="calendar__weekday"><?= $day; ?></div>
                     <?php } ?>
@@ -86,13 +94,17 @@ require'./views/header.php';
                     <?php foreach ($eventsForDay as $event) { ?>
                         <div class="calendar__event">
                             <?php
-                            $utilisateurId = $event['utilisateur_id'];
-                            $sql = "SELECT nom FROM utilisateur WHERE id = $utilisateurId";
+                            $parentId = $event['parent_id'];
+                            $nounouId = $_SESSION['id'];
+                            $sql = "SELECT U.nom FROM utilisateur U, prestation P WHERE U.id=$parentId AND P.nounou_id=$nounouId";
                             $req = $bdd->query($sql);
                             $res = $req->fetchAll();
-                            ?>
-                            <?= (new DateTime($event['debut_datetime']))->format('H:m'); ?> - <a href="event.php?id=<?= $event['id']; ?>"><?= $res['0']['nom'];
-                            ?></a> - <?= (new DateTime($event['fin_datetime']))->format('H:m'); ?>
+                            //var_dump($res);
+                            if (!empty($res)):
+                                ?>
+                                <?= (new DateTime($event['debut_datetime']))->format('H:i'); ?> - <?= (new DateTime($event['fin_datetime']))->format('H:i'); ?> - <a href="event.php?id=<?= $event['id']; ?>"><?= $res['0']['nom'];
+                                ?></a>
+                            <?php endif; ?>
                         </div>
                     <?php } ?>
                 </td>

@@ -20,6 +20,10 @@ and open the template in the editor.
     height: 20%;
 }
 
+.calendar__table td.is-today {
+    background-color: #f3f3f2;
+}
+
 .calendar__table--6weeks td{
     height: 16.66%;
 }
@@ -36,4 +40,8 @@ and open the template in the editor.
 
 .calendar__othermonth .calendar__day{
     opacity: 0.3;
+}
+
+.menu>ul>li{
+    display: inline-block;
 }

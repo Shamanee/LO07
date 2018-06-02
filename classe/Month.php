@@ -59,7 +59,13 @@ class Month {
         $start = $this->getStartingDay();
         $end = clone $start;
         $end->modify('+1 month -1day');
-        $weeks = intval($end->format('W')) - intval($start->format('W')) + 1;
+        $startWeek=intval($start->format('W'));
+        $endWeek= intval($end->format('W'));
+        if($endWeek===1){
+            $endWeek = clone $end;
+            $endWeek = intval($endWeek->modify('- 7 days')->format('W')) + 1;
+        }
+        $weeks = $endWeek - $startWeek + 1;
         if($weeks < 0){
             $weeks = intval($end->format('W'));
         }

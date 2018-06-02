@@ -43,11 +43,19 @@ class Event {
     }
     
     /**
-     * Permet d'obtenir l'id de l'utilisateur ayant demandé la prestation
+     * Permet d'obtenir l'id du parent ayant demandé la prestation
      * @return type int
      */
-    public function getUtilisateur_id() {
-        return $this->utilisateur_id;
+    public function getParent_id() {
+        return $this->parent_id;
+    }
+    
+    /**
+     * Permet d'obtenir l'id de la nounou qui va faire la prestation
+     * @return type int
+     */
+    public function getNounou_id() {
+        return $this->nounou_id;
     }
 
 }

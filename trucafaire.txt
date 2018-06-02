@@ -6,8 +6,7 @@
 Peut etre séparer les 2 formulaires
 
 BASE DE DONNEES :
-
-Prestation : Mettre l'id du parent qui réserve et id de la nounou qui va faire la prestation
+Prestation : Ajouter la langue optionnelle
 Revoir toutes les tables pour vérifier
 
 NOUNOU :

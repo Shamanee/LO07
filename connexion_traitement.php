@@ -19,7 +19,7 @@ $isPasswordCorrect = password_verify($_POST['password'], $resultat['password']);
  */
 if(!$resultat){
     echo "Erreur dans la communication des données avec la DataBase";
-    header('Refresh:2,url=connexion.php');
+    
 }else{
     if($isPasswordCorrect){
         session_start();
@@ -32,6 +32,7 @@ if(!$resultat){
     }
     else {
         echo 'Mauvais identifiant ou mot de passe !';
+        header('Refresh:2,url=connexion.php');
     }
 }
 
