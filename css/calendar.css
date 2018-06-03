@@ -42,6 +42,10 @@ and open the template in the editor.
     opacity: 0.3;
 }
 
+calendar__heure{
+    width: 5%;
+}
+
 .menu>ul>li{
     display: inline-block;
 }

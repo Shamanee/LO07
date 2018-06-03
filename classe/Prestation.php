@@ -53,7 +53,7 @@ class Prestation {
             if(!isset($days[$date])){
                 $days[$date] = [$event];
             }else{
-                $days[$date][] = $events;
+                $days[$date][] = $event;
             }
         }
         return $days;

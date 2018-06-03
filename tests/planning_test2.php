@@ -52,6 +52,7 @@ $end = (clone $start);
 $end = $end->modify('+' . (6 + 7 * ($weeks - 1)) . ' days');
 $events = $events->getPrestationBetweenByDay($start, $end);
 require'./views/header.php';
+dd($events);
 ?>
 <div class="d-flex flex-row align-items-center justify-content-between mx-sm-2">
     <h1><?= $month->toString(); ?></h1>

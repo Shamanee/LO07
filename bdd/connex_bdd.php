@@ -12,7 +12,10 @@ $password='';
 $dataSourceName='mysql:host=localhost;dbname=projetlo07db';
 
 try{
-    $bdd=new PDO($dataSourceName, $user, $password);
+    $bdd=new PDO($dataSourceName, $user, $password,[
+    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+    ]);
 } catch (Exception $ex) {
     die ("Erreur ! " . $ex->getMessage());
 }    

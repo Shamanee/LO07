@@ -25,7 +25,7 @@ try {
     $week = new Week();
 }
 
-var_dump($week);
+//var_dump($week);
 
 $events = new Prestation($pdo);
 $start = $week->getStartingDay();
@@ -38,6 +38,7 @@ $events = $events->getPrestationBetweenByDay($start, $end);
 require'./views/header.php';
 //var_dump($start);
 //var_dump($end);
+dd($events);
 ?>
 
 <h1><?= $week->toString(); ?></h1>
@@ -47,47 +48,96 @@ require'./views/header.php';
 <div>
     <a href="semaine.php?week=<?= $week->previousWeek()->week; ?>&year=<?= $week->previousWeek()->year; ?>" class="btn btn-primary">&lt;</a>
     <a href="semaine.php?week=<?= $week->nextWeek()->week; ?>&year=<?= $week->nextWeek()->year; ?>"class="btn btn-primary">&gt;</a>
-    </div>
+</div>
 
 <table class="calendar__table">
     <?php //for ($i = 0; $i < 7; $i++) { ?>
     <tr>
+        <td class="calendar__heure"></td>
         <?php
         foreach ($week->days as $k => $day) {
             $start2 = clone $start;
             $date = $start2->modify("+ $k days");
             //var_dump($date);
-            if (isset($events[$date->format('Y-m-d')])) {
-                $eventsForDay = $events[$date->format('Y-m-d')];
-            } else {
-                $eventsForDay = [];
-            };
+
             $isToday = date('Y-m-d') === $date->format('Y-m-d');
             ?>
 
             <td class="<?= $isToday ? 'is-today' : ''; ?>">
                 <div class="calendar__weekday"><?= $day ?></div>
                 <div class="calendar__day"><?= $date->format('d') ?></div>
-                <?php foreach ($eventsForDay as $event) { ?>
-                    <div class="calendar__event">
-                        <?php
-                        $parentId = $event['parent_id'];
-                        $nounouId = $_SESSION['id'];
-                        $sql = "SELECT U.nom FROM utilisateur U, prestation P WHERE U.id=$parentId AND P.nounou_id=$nounouId";
-                        $req = $bdd->query($sql);
-                        $res = $req->fetchAll();
-                        //var_dump($res);
-                        if (!empty($res)):
-                            ?>
-                            <?= (new DateTime($event['debut_datetime']))->format('H:i'); ?> - <?= (new DateTime($event['fin_datetime']))->format('H:i'); ?> - <a href="event.php?id=<?= $event['id']; ?>"><?= $res['0']['nom'];
-                            ?></a>
-                        <?php endif; ?>
-                    </div>
-                <?php } ?>
+
             </td>
             <?php
         }
         ?>
     </tr>
-    <?php // } ?>
+    <?php for ($heure = 0; $heure < 24; $heure++): ?>
+        <tr class="calendar__heure">
+            <td><?= $heure ?></td>
+            <?php
+            foreach ($week->days as $k => $day):
+                $start3 = clone $start;
+                $date = $start3->modify("+ $k days");
+                //var_dump($date->format('Y-m-d'));
+                if (isset($events[$date->format('Y-m-d')])) {
+                    $eventsForHours = $events[$date->format('Y-m-d')];
+                } else {
+                    $eventsForHours = [];
+                };
+                //var_dump($eventsForHours);
+                ?>
+                <td>
+                    <?php foreach ($eventsForHours as $k => $event) : ?>
+                        <div>
+                            <?php
+                            //var_dump($event);
+                            if (isset($event[$k])) {
+                                $parentId = $event[$k]['parent_id'];
+                            } else {
+                                $parentId = $event['parent_id'];
+                            }
+                            $nounouId = $_SESSION['id'];
+                            $heure_p = $date->format("Y-m-d {$heure}:i");
+                            //var_dump($heure_p);
+                            $sq = "SELECT P.debut_datetime,P.fin_datetime FROM prestation P, utilisateur U WHERE U.id=$parentId AND P.nounou_id=$nounouId AND P.debut_datetime='$heure_p' ";
+                            $re = $bdd->query($sq);
+                            $resu = $re->fetchAll();
+                            if (!empty($resu)) {
+                                var_dump($resu);
+                                $fin_datetime = new DateTime($resu[0]['fin_datetime']);
+                                $debut_datetime = new DateTime($resu[0]['debut_datetime']);
+                                $diff_date = date_diff($fin_datetime, $debut_datetime)->format("%h");
+                                $fin_date = clone $fin_datetime;
+                                $fin_date = $fin_date->format('H');
+                                var_dump($fin_date);
+                            }
+                            
+                            $sql = "SELECT U.nom FROM utilisateur U, prestation P WHERE U.id=$parentId AND P.nounou_id=$nounouId AND P.debut_datetime='$heure_p'";
+                            $req = $bdd->query($sql);
+                            $res = $req->fetchAll();
+
+                            if (!empty($res)):
+                                //$fin_p = $res[0]['fin_datetime'];
+                                //var_dump($event['debut_datetime']);
+                                $heure_modif = $heure;
+                                if ($heure < 10) {
+
+                                    $heure_modif = "0" . $heure_modif;
+                                }
+                                //var_dump($date->format("Y-m-d {$heure_modif}:i:s"));
+                                ?>
+                                <?php if ($event['debut_datetime'] === $date->format("Y-m-d {$heure_modif}:i:s")): ?>
+                                    <a href="event.php?id=<?= $event['id']; ?>"><?= $res['0']['nom']; ?></a>
+                                <?php endif; ?>
+                            <?php endif; ?>
+
+                        </div>
+
+                    <?php endforeach; ?>
+                </td>
+            <?php endforeach; ?>
+        </tr>
+    <?php endfor; ?>
+    <?php // }   ?>
 </table>
