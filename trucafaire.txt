@@ -14,9 +14,8 @@ NOUNOU :
 Supprimer planning.php
 Supprimer planning_test.php
 Supprimer Calendrier.php
--> SEULEMENT SI planning_test2.php marche correctement (avec Month.php)
 
-Faire en sorte que les evenements soient sur toute la durée (pas seulement 1h)
+FINI
 
 PARENT :
 Pouvoir reserver une garde (peu importe laquelle)

@@ -5,6 +5,9 @@ session_start();
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+if ($_SESSION['User_Type'] !== 'nounou') {
+    header('Location:../error403.html');
+}
 require '../classe/Week.php';
 require '../classe/Prestation.php';
 require '../bdd/connex_bdd.php';
