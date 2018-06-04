@@ -49,3 +49,7 @@ calendar__heure{
 .menu>ul>li{
     display: inline-block;
 }
+
+.calendar__event{
+    background-color: black;
+}

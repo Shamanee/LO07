@@ -32,10 +32,10 @@ session_start();
                 $req = $bdd->query("SELECT COUNT(*) FROM utilisateur_has_langue WHERE utilisateur_id='".$_SESSION['id']."'");
                 $resu=$req->fetchAll();
                 var_dump($resu);
-                if ($res[0][0] == '0') {
+                if ($res[0] == '0') {
                     echo '<script>premiere_co_nounou_dispo()</script>';
                 }
-                if ($resu[0][0]=='0'){
+                if ($resu[0]=='0'){
                     echo '<script>premiere_co_nounou_langue()</script>';
                 }
                 

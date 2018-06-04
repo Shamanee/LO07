@@ -71,7 +71,8 @@ require './bdd/connex_bdd.php';
             $jours = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
             $re = $bdd->query("SELECT COUNT(jour) FROM disponibilite WHERE utilisateur_id='" . $_SESSION['id'] . "'");
             $res = $re->fetchAll();
-            if ($res[0][0] !== '0') {
+            var_dump($res);
+            if ($res[0] !== '0') {
                 ?>
                 <h2>Vos disponibilités (Générales)</h2>
                 <table>
@@ -93,7 +94,7 @@ require './bdd/connex_bdd.php';
             }
             $req = $bdd->query("SELECT COUNT(langue_id) FROM utilisateur_has_langue WHERE utilisateur_id='" . $_SESSION['id'] . "'");
             $resultat = $req->fetchAll();
-            if ($resultat[0][0] !== '0') {
+            if ($resultat[0] !== '0') {
                 ?>
                 <table>
                     <tr>

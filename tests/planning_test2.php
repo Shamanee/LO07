@@ -12,7 +12,7 @@ and open the template in the editor.
  * Sinon, ça prend la valeur NULL et on dirige l'utilisateur sur le mois actuel
  */
 session_start();
-if ($_SESSION['User_Type']!=='nounou'){
+if ($_SESSION['User_Type'] !== 'nounou') {
     header('Location:../error403.html');
 }
 require '../classe/Month.php';
@@ -52,16 +52,17 @@ $end = (clone $start);
 $end = $end->modify('+' . (6 + 7 * ($weeks - 1)) . ' days');
 $events = $events->getPrestationBetweenByDay($start, $end);
 require'./views/header.php';
-dd($events);
+//dd($events);
 ?>
 <div class="d-flex flex-row align-items-center justify-content-between mx-sm-2">
     <h1><?= $month->toString(); ?></h1>
     <div class="menu">
-        <?php require './menu_test.php';?>
+        <?php require './menu_test.php'; ?>
     </div>
     <div>
         <a href="planning_test2.php?month=<?= $month->previousMonth()->month; ?>&year=<?= $month->previousMonth()->year; ?>" class="btn btn-primary">&lt;</a>
         <a href="planning_test2.php?month=<?= $month->nextMonth()->month; ?>&year=<?= $month->nextMonth()->year; ?>"class="btn btn-primary">&gt;</a>
+        <a href="semaine.php" class="btn btn-primary">Semaine</a>
     </div>
 </div>
 
@@ -93,7 +94,7 @@ dd($events);
                     <?php } ?>
                     <div class="calendar__day"><?= $date->format('d'); ?></div>
                     <?php foreach ($eventsForDay as $event) { ?>
-                        <div class="calendar__event">
+                        <div>
                             <?php
                             $parentId = $event['parent_id'];
                             $nounouId = $_SESSION['id'];

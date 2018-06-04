@@ -25,8 +25,6 @@ try {
     $week = new Week();
 }
 
-//var_dump($week);
-
 $events = new Prestation($pdo);
 $start = $week->getStartingDay();
 $start = $start->format('N') === '1' ? $start : $week->getStartingDay()->modify('last monday');
@@ -38,7 +36,7 @@ $events = $events->getPrestationBetweenByDay($start, $end);
 require'./views/header.php';
 //var_dump($start);
 //var_dump($end);
-dd($events);
+//dd($events);
 ?>
 
 <h1><?= $week->toString(); ?></h1>
@@ -48,9 +46,12 @@ dd($events);
 <div>
     <a href="semaine.php?week=<?= $week->previousWeek()->week; ?>&year=<?= $week->previousWeek()->year; ?>" class="btn btn-primary">&lt;</a>
     <a href="semaine.php?week=<?= $week->nextWeek()->week; ?>&year=<?= $week->nextWeek()->year; ?>"class="btn btn-primary">&gt;</a>
+    <a href="planning_test2.php" class="btn btn-primary">Mois</a>
 </div>
 
 <table class="calendar__table">
+
+
     <?php //for ($i = 0; $i < 7; $i++) { ?>
     <tr>
         <td class="calendar__heure"></td>
@@ -72,6 +73,9 @@ dd($events);
         }
         ?>
     </tr>
+
+
+
     <?php for ($heure = 0; $heure < 24; $heure++): ?>
         <tr class="calendar__heure">
             <td><?= $heure ?></td>
@@ -87,9 +91,12 @@ dd($events);
                 };
                 //var_dump($eventsForHours);
                 ?>
-                <td>
+                <td class="test">
+
                     <?php foreach ($eventsForHours as $k => $event) : ?>
+
                         <div>
+
                             <?php
                             //var_dump($event);
                             if (isset($event[$k])) {
@@ -100,44 +107,51 @@ dd($events);
                             $nounouId = $_SESSION['id'];
                             $heure_p = $date->format("Y-m-d {$heure}:i");
                             //var_dump($heure_p);
-                            $sq = "SELECT P.debut_datetime,P.fin_datetime FROM prestation P, utilisateur U WHERE U.id=$parentId AND P.nounou_id=$nounouId AND P.debut_datetime='$heure_p' ";
-                            $re = $bdd->query($sq);
-                            $resu = $re->fetchAll();
-                            if (!empty($resu)) {
-                                var_dump($resu);
-                                $fin_datetime = new DateTime($resu[0]['fin_datetime']);
-                                $debut_datetime = new DateTime($resu[0]['debut_datetime']);
-                                $diff_date = date_diff($fin_datetime, $debut_datetime)->format("%h");
-                                $fin_date = clone $fin_datetime;
-                                $fin_date = $fin_date->format('H');
-                                var_dump($fin_date);
-                            }
                             
-                            $sql = "SELECT U.nom FROM utilisateur U, prestation P WHERE U.id=$parentId AND P.nounou_id=$nounouId AND P.debut_datetime='$heure_p'";
+                            $sql = "SELECT U.nom FROM utilisateur U, prestation P WHERE U.id=$parentId AND P.nounou_id=$nounouId AND P.id=".$event['id']."";
                             $req = $bdd->query($sql);
-                            $res = $req->fetchAll();
+                            $res = $req->fetch();
+                            
+                            
+                            //if (isset($diff_date)):
+                            
+                            //var_dump($res);
 
-                            if (!empty($res)):
+
                                 //$fin_p = $res[0]['fin_datetime'];
                                 //var_dump($event['debut_datetime']);
+                                //var_dump($debut_datetime);
                                 $heure_modif = $heure;
                                 if ($heure < 10) {
 
                                     $heure_modif = "0" . $heure_modif;
                                 }
                                 //var_dump($date->format("Y-m-d {$heure_modif}:i:s"));
+                                $date_modif = $date->format("Y-m-d {$heure_modif}:i:s");
+                                //date_modify($date_modif,"+ 1 hour");
+                                //var_dump($date_modif); 
                                 ?>
-                                <?php if ($event['debut_datetime'] === $date->format("Y-m-d {$heure_modif}:i:s")): ?>
-                                    <a href="event.php?id=<?= $event['id']; ?>"><?= $res['0']['nom']; ?></a>
-                                <?php endif; ?>
-                            <?php endif; ?>
+                                <?php
+                                if ($date_modif < $event['fin_datetime'] && $date_modif >= $event['debut_datetime']):
+                                    //var_dump(intval($debut_datetime->format("H")));
+                                    //var_dump(intval($fin_datetime->format("H")));
+                                    ?>
+                                    <div style="background-color: beige">
+                                        <a href="event.php?id=<?= $event['id']; ?>"><?= $res['nom'] ?></a>
+                                    </div>
+                                    <?php
+                                endif;
+                                ?>
+                                <?php
+                            //endif;
+                            ?>
 
                         </div>
 
                     <?php endforeach; ?>
-                </td>
+                </td>   
             <?php endforeach; ?>
         </tr>
     <?php endfor; ?>
-    <?php // }   ?>
+    <?php // }       ?>
 </table>
