@@ -42,8 +42,8 @@ and open the template in the editor.
     opacity: 0.3;
 }
 
-calendar__heure{
-    width: 5%;
+.calendar__table td .calendar__heure{
+    width: 1%;
 }
 
 .menu>ul>li{
@@ -52,4 +52,27 @@ calendar__heure{
 
 .calendar__event{
     background-color: black;
+}
+
+.test{
+    background-color: green;
+}
+
+.calendar__table__heure{
+    width: 100%;
+    height: calc(100vh - 100px);
+}
+
+.calendar__table__heure td .calendar__heure{
+
+    width: 5%;
+}
+
+.calendar__table__heure td{
+    padding: 10px;
+    border: 1px solid #CCC;
+    vertical-align: top;
+    text-align: right;
+    width: 15%;
+    height: 20%;
 }

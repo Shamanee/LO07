@@ -33,7 +33,8 @@ $jours = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche
             if ($_SESSION['User_Type'] === 'nounou') {
                 $re = $bdd->query("SELECT COUNT(jour) FROM disponibilite WHERE utilisateur_id='" . $_SESSION['id'] . "'");
                 $res = $re->fetchAll();
-                if ($res[0][0] !== '0') {
+                var_dump($res);
+                if ($res[0] !== '0') {
                     ?>
         <table>
             <tr>
