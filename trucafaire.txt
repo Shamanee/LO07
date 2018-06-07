@@ -17,6 +17,8 @@ Supprimer planning.php
 Supprimer planning_test.php
 Supprimer Calendrier.php
 
+Voir pour les graph
+
 FINI
 
 PARENT :

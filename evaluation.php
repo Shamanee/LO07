@@ -9,10 +9,10 @@ require './bdd/connex_bdd.php';
 ?>
 <head>
     <script language="javascript" type="text/javascript" src="jQuery/jquery-3.3.1.min.js"></script>
-    <script language="javascript" type="text/javascript" src="jqPlot/jquery.jqplot.min.js"></script>
+    <!--<script language="javascript" type="text/javascript" src="jqPlot/jquery.jqplot.min.js"></script>
     <script language="javascript" type="text/javascript" src="jqPlot/plugins/jqplot.barRenderer.js"></script>
     <script language="javascript" type="text/javascript" src="jqPlot/plugins/jqplot.CategoryAxisRenderer.js"></script>
-    <link rel="stylesheet" type="text/css" href="jquery.jqplot.css" />
+    <link rel="stylesheet" type="text/css" href="jquery.jqplot.css" />-->
 </head>
 <body>
     <h2>Vos Evaluations</h2>
@@ -62,7 +62,7 @@ require './bdd/connex_bdd.php';
         endwhile;
         ?>
     </table>
-    <div id="chart1" style="height:200px;width:400px; ">
+    <!--<div id="chart1" style="height:200px;width:400px; ">
             <script>$.jqplot('chart1', [[0, 0, 1, 0, 1, 0]],
                     {title:'test',
                        axes:{xaxis:{
@@ -71,5 +71,5 @@ require './bdd/connex_bdd.php';
                     series: [{renderer:$.jqplot.BarRenderer},{color: '#5FAB78'}]
                     });
         </script>
-    </div>
+    </div>-->
 </body>

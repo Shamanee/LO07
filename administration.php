@@ -15,6 +15,7 @@ require './bdd/connex_bdd.php';
     <head>
         <meta charset="UTF-8">
         <script type="text/javascript" src="function_js.js"></script>
+        <script src='jQuery/jquery-3.3.1.min.js'></script>
         <title></title>
     </head>
     <body>
@@ -30,29 +31,9 @@ require './bdd/connex_bdd.php';
         <?php
         include './menu.php';
         ?>
-        <h2>Liste Utilisateurs</h2>
-        <table>
-            <tr>
-                <th>Type</th>
-                <th>Prenom</th>
-                <th>Nom</th>
-                <th>Email</th>
-                <th>Ville</th>
-            </tr>
-            <?php
-            /**
-             * On effectue une requete pour avoir tous les utilisateur du site, et on les affiche dans un tableau (en excluant l'administrateur du site)
-             */
-            $requete = $bdd->query('SELECT User_Type, prenom,nom,email,ville FROM utilisateur');
-            while ($donnees = $requete->fetch()) {
-                if ($donnees['User_Type'] != 'admin') {
-                    echo "<tr>\n\t<td>" . $donnees['User_Type'] . "</td>\n<td>" . $donnees['prenom'] . "</td>\n<td>" . $donnees['nom'] . "</td>\n<td>" . $donnees['email'] . "</td>\n<td>" . $donnees['ville'] . "</td>\n</tr>";
-                }
-            }
-            $requete->closeCursor();
-            ?>
-        </table>
+        
         <?php
+        require './administration/liste_utilisateur.php';
         /**
          * On fait une requete pour savoir les nounous qui sont dans l'attente d'acceptation (User_Type = pending)
          * Si la requete est vide, on n'affiche rien
