@@ -72,6 +72,12 @@ require './bdd/connex_bdd.php';
             $re = $bdd->query("SELECT COUNT(jour) FROM disponibilite WHERE utilisateur_id='" . $_SESSION['id'] . "'");
             $res = $re->fetchAll();
             var_dump($res);
+            require './administration/function.php';
+            ?>
+        <h2>Vos bénéfices</h2>
+        <h3>Mensuel : </h3><?= calculBenefNounouMois($_SESSION['id'])?>&euro;<br/>
+        <h3>Hebdomadaire :</h3><?= calculBenefNounouSemaine($_SESSION['id'])?>&euro;<br/>
+        <?php
             if ($res[0] !== '0') {
                 ?>
                 <h2>Vos disponibilités (Générales)</h2>

@@ -25,7 +25,8 @@ require './bdd/connex_bdd.php';
         </tr>
         <?php
         $nounouId = $_SESSION['id'];
-        $sql = "SELECT Note, Commentaire FROM evaluation WHERE utilisateur_id=$nounouId";
+        $sql = "SELECT E.Note, E.Commentaire, U.nom FROM evaluation E, utilisateur U WHERE nounou_id=$nounouId AND E.parent_id=U.id";
+        //$sql = "SELECT Note, Commentaire FROM evaluation WHERE nounou_id=$nounouId";
         $req = $bdd->query($sql);
         while ($donnees = $req->fetch()):
             ?>
@@ -56,7 +57,7 @@ require './bdd/connex_bdd.php';
                     ?></td>
 
                 <td><?= $donnees['Commentaire'] ?></td>
-                <td>Anonyme</td>
+                <td><?= $donnees['nom']?></td>
             </tr>
             <?php
         endwhile;

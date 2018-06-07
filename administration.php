@@ -10,6 +10,9 @@ and open the template in the editor.
  */
 session_start();
 require './bdd/connex_bdd.php';
+//require './administration/function.php';
+require 'classe/Week.php';
+require 'classe/Month.php';
 ?>
 <html>
     <head>
@@ -39,12 +42,14 @@ require './bdd/connex_bdd.php';
          * Si la requete est vide, on n'affiche rien
          * Si elle ne l'est pas, on affiche un tableau contenant les informations sur les nounous à valider
          */
-        $sql = "SELECT prenom,nom,ville,date_naissance,experience,information FROM utilisateur WHERE User_Type = 'pending'";
+        $ree = $bdd->query("SELECT COUNT(*) FROM utilisateur WHERE User_Type = 'pending'");
+        $ress = $ree->fetch();
+        $sql = "SELECT prenom,nom,ville,date_naissance,experience,information,id FROM utilisateur WHERE User_Type = 'pending'";
         $r = $bdd->query($sql);
         $res = $r->fetchAll();
-        if(!empty($res)){
+        if(!empty($res[0]['prenom'])){
         ?>
-        <h2>Liste des candidatures de nounous</h2>
+        <h2>Liste des candidatures de nounous (<?= $ress['COUNT(*)']?> candidatures)</h2>
         <table>
             <tr>
                 <th>Prenom</th>
@@ -64,6 +69,7 @@ require './bdd/connex_bdd.php';
                 <form method='POST' action='administration_traitement.php'>\n
                 <input type='submit' class='button' name='check' value='&check;' onclick=\"return confirm('Vous allez accepter cette personne comme nounou, êtes vous sûr ?');\"/>\n
                 <input type='submit' class='button' name='cross' value='&cross;' onclick=\"return confirm('Vous allez refuser cette personne, êtes vous sûr ?');\"/>
+                <input type='hidden' name='idaccept' value='".$don['id']."'/>
                 </form>    
                 </td>";
                 /**

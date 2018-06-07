@@ -23,6 +23,9 @@
         } else if ($_SESSION['User_Type'] == 'pending') {
             echo "<li><a href='deconnexion.php'>Deconnexion</a></li>\n";
             echo "<br/>\nVous etes en attente d'acceptation. Un administrateur s'occupe de vous.<br/>\n";
+        } else if ($_SESSION['User_Type'] == 'blocked'){
+            echo "<li><a href='deconnexion.php'>Deconnexion</a></li>\n";
+            echo "<br/>\nVotre compte est temporairement bloqué.";
         }
     } else {
         echo "Veuillez vous connecter pour plus de fonctionnalités";
