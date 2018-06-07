@@ -111,7 +111,9 @@ require './bdd/connex_bdd.php';
 
             <?php
             }
+            require './evaluation.php';
         }
+        
         ?>
     </body>
 </html>

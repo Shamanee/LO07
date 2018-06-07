@@ -7,6 +7,8 @@ Peut etre séparer les 2 formulaires
 
 BASE DE DONNEES :
 Prestation : Ajouter la langue optionnelle
+Evaluation : Ajouter la date
+		Parent_id et Nounou_id
 Revoir toutes les tables pour vérifier
 
 NOUNOU :
