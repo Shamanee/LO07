@@ -25,7 +25,6 @@ function calculBenefNounouSemaine($nounouId) {
     }
     return $benef;
 }
-
 function calculBenefNounouMois($nounouId){
     require './bdd/connex_bdd.php';
     require './classe/Month.php';
@@ -48,6 +47,19 @@ function calculBenefNounouMois($nounouId){
         //var_dump($enddate);
         //var_dump($diffdate);
         $benef += 7 * intval($diffdate);
+    }
+    return $benef;
+}
+//echo calculBenefNounouSemaine(4);
+//echo calculBenefNounouMois(4);
+
+function calculBenefTotal(){
+    require './bdd/connex_bdd.php';
+    $sql = "SELECT id FROM utilisateur WHERE User_Type = 'nounou'";
+    $req = $bdd($sql);
+    $benef = 0;
+    while($res = $req->fetch()){
+        $benef += calculBenefNounouMois($res['id']);
     }
     return $benef;
 }

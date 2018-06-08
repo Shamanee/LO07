@@ -44,12 +44,13 @@ require 'classe/Month.php';
          */
         $ree = $bdd->query("SELECT COUNT(*) FROM utilisateur WHERE User_Type = 'pending'");
         $ress = $ree->fetch();
+        $nbCandidature = $ress['COUNT(*)'];
         $sql = "SELECT prenom,nom,ville,date_naissance,experience,information,id FROM utilisateur WHERE User_Type = 'pending'";
         $r = $bdd->query($sql);
         $res = $r->fetchAll();
         if(!empty($res[0]['prenom'])){
         ?>
-        <h2>Liste des candidatures de nounous (<?= $ress['COUNT(*)']?> candidatures)</h2>
+        <h2>Liste des candidatures de nounous (<?= $nbCandidature?> candidatures)</h2>
         <table>
             <tr>
                 <th>Prenom</th>
@@ -83,6 +84,7 @@ require 'classe/Month.php';
         }
         $requete->closeCursor();
         ?>
+        
     </table>
 </body>
 </html>

@@ -27,12 +27,11 @@ Pouvoir reserver une garde (peu importe laquelle)
 
 
 ADMINISTRATION :
-Compter le nombre d'inscription de nounous (en demande + inscrite)
+
 Savoir le chiffre d'affaire (Mois, trimestre, année)
 Possibilité d'accéder à tous les profil des nounous (liste prestations, evaluations, revenus)
 Pouvoir lister les nounous par revenus
-Pouvoir bloquer l'activiter d'une nounou temporairement
--> Passer le User_Type en 'blocked'
+
 
 
 

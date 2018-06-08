@@ -2,12 +2,14 @@
 ?>
 <button id='btn_utilisateur'>Utilisateurs</button>
 <button id='btn_nounou'>Nounous</button>
+<button id='btn_chiffre'>Chiffres</button>
 <div id='table_utilisateur' style='display: none'>
     <?php
-        $req = $bdd->query("SELECT COUNT(*) FROM utilisateur WHERE User_Type <> 'admin'");
-        $res = $req->fetch();
+    $req = $bdd->query("SELECT COUNT(*) FROM utilisateur WHERE User_Type <> 'admin'");
+    $res = $req->fetch();
+    $nbUtilisateur = $res['COUNT(*)'];
     ?>
-    <h2>Liste Utilisateurs (<?= $res['COUNT(*)']?> utilisateurs)</h2>
+    <h2>Liste Utilisateurs (<?= $nbUtilisateur ?> utilisateurs)</h2>
     <table>
         <tr>
             <th>Type</th>
@@ -30,12 +32,13 @@
         ?>
     </table>
 </div>
-<div id="table_nounou" style=''>
-<?php
-        $req1 = $bdd->query("SELECT COUNT(*) FROM utilisateur WHERE User_Type = 'nounou'");
-        $res1 = $req1->fetch();
-?>
-    <h2>Liste Nounous (<?= $res1['COUNT(*)'] ?> nounous)</h2>
+<div id="table_nounou" style='display: none'>
+    <?php
+    $req1 = $bdd->query("SELECT COUNT(*) FROM utilisateur WHERE User_Type = 'nounou'");
+    $res1 = $req1->fetch();
+    $nbNounou = $res1['COUNT(*)'];
+    ?>
+    <h2>Liste Nounous (<?= $nbNounou ?> nounous)</h2>
     <table>
         <tr>
             <th>Prenom</th>
@@ -52,25 +55,33 @@
          */
         $requete = $bdd->query("SELECT User_Type,id,prenom,nom,email,ville FROM utilisateur WHERE User_Type='nounou' OR User_Type='blocked'");
         while ($donnees = $requete->fetch()) {
-            if($donnees['User_Type'] === 'nounou'){
-            $benefmois = calculBenefNounouMois($donnees['id']);
-            $benefsem = calculBenefNounouSemaine($donnees['id']);
-            echo "<tr>\n\t<td>" . $donnees['prenom'] . "</td>\n<td>" . $donnees['nom'] . "</td>\n<td>" . $donnees['email'] . "</td>\n<td>" . $donnees['ville'] . "</td>\n<td>" . $benefmois . "&euro;</td>\n<td>" . $benefsem . "&euro;</td>\n<td>"
-                    . "<form method='POST' action='administration_traitement.php'>"
-                    . "<input type='submit' class='button' value='Bloquer' name='bloquer' onclick=\"return confirm('Vous allez bloquer cette personne, êtes vous sûr ?');\"/>"
-                    . "<input type='hidden' name='idblock' value='".$donnees['id']."'/>"
-                    . "</form></td>\n</tr>";
+            if ($donnees['User_Type'] === 'nounou') {
+                $benefmois = calculBenefNounouMois($donnees['id']);
+                $benefsem = calculBenefNounouSemaine($donnees['id']);
+                echo "<tr>\n\t<td>" . $donnees['prenom'] . "</td>\n<td>" . $donnees['nom'] . "</td>\n<td>" . $donnees['email'] . "</td>\n<td>" . $donnees['ville'] . "</td>\n<td>" . $benefmois . "&euro;</td>\n<td>" . $benefsem . "&euro;</td>\n<td>"
+                . "<form method='POST' action='administration_traitement.php'>"
+                . "<input type='submit' class='button' value='Bloquer' name='bloquer' onclick=\"return confirm('Vous allez bloquer cette personne, êtes vous sûr ?');\"/>"
+                . "<input type='hidden' name='idblock' value='" . $donnees['id'] . "'/>"
+                . "</form></td>\n</tr>";
             } else {
                 echo "<tr>\n\t<td>" . $donnees['prenom'] . "</td>\n<td>" . $donnees['nom'] . "</td>\n<td>" . $donnees['email'] . "</td>\n<td>" . $donnees['ville'] . "</td>\n<td>" . $benefmois . "&euro;</td>\n<td>" . $benefsem . "&euro;</td>\n<td>"
-                    . "<form method='POST' action='administration_traitement.php'>"
-                    . "<input type='submit' class='button' value='Débloquer' name='debloquer' onclick=\"return confirm('Vous allez débloquer cette personne, êtes vous sûr ?');\"/>"
-                    . "<input type='hidden' name='idblock' value='".$donnees['id']."'/>"
-                    . "</form></td>\n</tr>";
+                . "<form method='POST' action='administration_traitement.php'>"
+                . "<input type='submit' class='button' value='Débloquer' name='debloquer' onclick=\"return confirm('Vous allez débloquer cette personne, êtes vous sûr ?');\"/>"
+                . "<input type='hidden' name='idblock' value='" . $donnees['id'] . "'/>"
+                . "</form></td>\n</tr>";
             }
         }
         $requete->closeCursor();
         ?>
     </table>
+</div>
+<div id='chiffre' style='display: none'>
+    <h2>Les chiffres du site</h2>
+    <ul>
+        <li><?= $nbNounou ?> Nounous au total</li>
+        <li><?= $nbUtilisateur ?> Utilisateurs</li>
+        <li><?= calculBenefTotal() ?> &euro; de CA mensuel</li>
+    </ul>
 </div>
 <?php
 
@@ -126,18 +137,32 @@ function calculBenefNounouMois($nounouId) {
     }
     return $benef;
 }
+
+function calculBenefTotal() {
+    require './bdd/connex_bdd.php';
+    $sql = "SELECT id FROM utilisateur WHERE User_Type = 'nounou'";
+    $req = $bdd->query($sql);
+    $benef = 0;
+    while ($res = $req->fetch()) {
+        $benef += calculBenefNounouMois($res['id']);
+    }
+    return $benef;
+}
 ?>
 <script>
     $("#btn_utilisateur").on('click', function () {
         $('#table_nounou').fadeOut().delay(1500);
-        $('#table_utilisateur').fadeIn()();
-
+        $('#chiffre').fadeOut().delay(1500);
+        $('#table_utilisateur').fadeIn();
     });
     $("#btn_nounou").on('click', function () {
         $('#table_utilisateur').fadeOut().delay(1500);
+        $('#chiffre').fadeOut().delay(1500);
         $('#table_nounou').fadeIn();
-
     });
+    $("#btn_chiffre").on('click', function () {
+        $('#table_utilisateur').fadeOut().delay(1500);
+        $('#table_nounou').fadeOut().delay(1500);
+        $('#chiffre').fadeIn();
+    })
 </script>
-
-
