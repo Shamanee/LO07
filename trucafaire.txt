@@ -7,6 +7,7 @@ Peut etre séparer les 2 formulaires
 
 BASE DE DONNEES :
 Prestation : Ajouter la langue optionnelle
+		Ajouter le type de prestation
 Evaluation : Ajouter la date
 		Parent_id et Nounou_id
 Revoir toutes les tables pour vérifier
@@ -18,20 +19,16 @@ Supprimer planning_test.php
 Supprimer Calendrier.php
 
 Voir pour les graph
-
-FINI
+Changer les fonction de calcul du benef en fonction des enfants dans la garde
 
 PARENT :
 Pouvoir reserver une garde (peu importe laquelle)
--> TOUT A FAIRE
+->Séparer les 3 types de gardes
 
 
 ADMINISTRATION :
 
 Savoir le chiffre d'affaire (Mois, trimestre, année)
-Possibilité d'accéder à tous les profil des nounous (liste prestations, evaluations, revenus)
-Pouvoir lister les nounous par revenus
-
 
 
 
@@ -49,10 +46,16 @@ Liste de ce qui a été fait :
 -Administration
 	->Voir les inscrits sur le site
 	->Recrutement des nounous
+	->Afficher le nombre de nounous
+	->Pour bloquer/débloquer des nounous
+	->Afficher les bénéfices des nounous
+	->Accès au profil des nounous
+	->Trier les nounous par revenu (et par nom)
 -Nounou
 	->Disponibilités
 	->Langues parlées
 	->Experience/Infos (dans le profil)
 	->Début de planning (non-fonctionnel)
+	->Afficher le bénéfice hebdo et mensuel
 -Parent
 	->Ajouter des enfants

@@ -1,3 +1,5 @@
+<script src='./sortElements.js'></script>
+
 <?php //require '../bdd/connex_bdd.php';
 ?>
 <button id='btn_utilisateur'>Utilisateurs</button>
@@ -39,15 +41,16 @@
     $nbNounou = $res1['COUNT(*)'];
     ?>
     <h2>Liste Nounous (<?= $nbNounou ?> nounous)</h2>
-    <table>
+    <table id="tablenounou">
         <tr>
             <th>Prenom</th>
-            <th>Nom</th>
+            <th id='nomnounou'>Nom</th>
             <th>Email</th>
             <th>Ville</th>
-            <th>Bénéfice Mensuel</th>
-            <th>Bénéfice Hebdomadaire</th>
+            <th id='benefmois'>Bénéfice Mensuel</th>
+            <th id="benefsem">Bénéfice Hebdomadaire</th>
             <th>Bloquer</th>
+            <th>Profil</th>
         </tr>
         <?php
         /**
@@ -62,7 +65,8 @@
                 . "<form method='POST' action='administration_traitement.php'>"
                 . "<input type='submit' class='button' value='Bloquer' name='bloquer' onclick=\"return confirm('Vous allez bloquer cette personne, êtes vous sûr ?');\"/>"
                 . "<input type='hidden' name='idblock' value='" . $donnees['id'] . "'/>"
-                . "</form></td>\n</tr>";
+                . "</form></td>\n"
+                . "<td><a href='profil-nounou.php?nom=".$donnees['nom']."'>Profil</a></td>\n</tr>";
             } else {
                 echo "<tr>\n\t<td>" . $donnees['prenom'] . "</td>\n<td>" . $donnees['nom'] . "</td>\n<td>" . $donnees['email'] . "</td>\n<td>" . $donnees['ville'] . "</td>\n<td>" . $benefmois . "&euro;</td>\n<td>" . $benefsem . "&euro;</td>\n<td>"
                 . "<form method='POST' action='administration_traitement.php'>"
@@ -164,5 +168,42 @@ function calculBenefTotal() {
         $('#table_utilisateur').fadeOut().delay(1500);
         $('#table_nounou').fadeOut().delay(1500);
         $('#chiffre').fadeIn();
-    })
+    });
+</script>
+
+<script>
+    var table = $('#tablenounou');
+
+    $('#nomnounou, #benefmois, #benefsem')
+            .wrapInner('<span title="sort this column"/>')
+            .each(function () {
+
+                var th = $(this),
+                        thIndex = th.index(),
+                        inverse = false;
+
+                th.click(function () {
+
+                    table.find('td').filter(function () {
+
+                        return $(this).index() === thIndex;
+
+                    }).sortElements(function (a, b) {
+
+                        return $.text([a]) > $.text([b]) ?
+                                inverse ? -1 : 1
+                                : inverse ? 1 : -1;
+
+                    }, function () {
+
+                        // parentNode is the element we want to move
+                        return this.parentNode;
+
+                    });
+
+                    inverse = !inverse;
+
+                });
+
+            });
 </script>
