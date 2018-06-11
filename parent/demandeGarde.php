@@ -32,7 +32,7 @@ session_start();
             if ($_POST['choix'] === 'ponctuelle') {
                 header('location:demandeGardePonctuelle.php');
             } else if ($_POST['choix'] === 'reguliere'){
-                echo 'garde reguliere';
+                header('location:demandeGardeReguliere.php');
             } else if ($_POST['choix'] === 'etrangere') {
                 echo 'garde etrangere';
             }

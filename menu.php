@@ -12,7 +12,7 @@
             echo "<li><a href='profil.php'>Profil</a></li>\n";
             echo "<li><a href='deconnexion.php'>Deconnexion</a></li>\n";
         } else if ($_SESSION['User_Type'] == 'parent') {
-            echo "<li><a href=''>Reserver</a></li>\n";
+            echo "<li><a href='parent/demandeGarde.php'>Reserver</a></li>\n";
             echo "<li><a href='enfant.php'>Enfants</a></li>\n";
             echo "<li><a href='profil.php'>Profil</a></li>\n";
             echo "<li><a href='deconnexion.php'>Deconnexion</a></li>\n";

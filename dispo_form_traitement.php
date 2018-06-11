@@ -9,6 +9,7 @@ $heure_fin = [];
 foreach ($jours as $k => $value) {
     $r = $bdd->query("SELECT Debut,Fin FROM disponibilite WHERE utilisateur_id='" . $_SESSION['id'] . "' AND jour=$k");
     $result = $r->fetch();
+    var_dump($result);
     if (isset($_POST[$value])) {
         $jour = $_POST[$value];
         //var_dump($jour);
@@ -30,7 +31,7 @@ foreach ($jours as $k => $value) {
             var_dump($h_fin);
             var_dump($heure_debut);
             var_dump($heure_fin);
-            if ($result[0] === NULL && $result[1] === NULL) {
+            if ($result['Debut'] === NULL && $result['Fin'] === NULL) {
                 $req = $bdd->exec("INSERT INTO disponibilite (Debut, Fin, jour, utilisateur_id) VALUES ('$h_deb', '$h_fin', '$k', " . $_SESSION['id'] . ")");
             } else {
                 echo 'TEST TEST TEST';

@@ -18,7 +18,7 @@ function radio ($name, $data) {
 function checkbox($name, $data) {
     foreach ($data as $elm) {
 
-        echo("<input type='checkbox' name='$name' value='$elm'/ >$elm<br> >");
+        echo("<br/><input type='checkbox' name='$name' value='$elm' id='$elm'/><label for='$elm'>$elm</label><br>");
     }
 }
 
