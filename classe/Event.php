@@ -17,7 +17,9 @@ class Event {
     private $debut_datetime;
     private $fin_datetime;
     private $utilisateur_id;
-    
+    private $langue_id;
+
+
     /**
      * Permet d'obtenir l'id d'une prestation
      * @return type int
@@ -56,6 +58,10 @@ class Event {
      */
     public function getNounou_id() {
         return $this->nounou_id;
+    }
+    
+    public function getLangue_id(){
+    return $this->langue_id;
     }
 
 }

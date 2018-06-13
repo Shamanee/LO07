@@ -19,7 +19,7 @@ $events = new Prestation($pdo);
 if (!isset($_GET['id'])) {
     header("location: error404.html");
 }
-try{
+try {
     $event = $events->find($_GET['id']);
 } catch (Exception $ex) {
     e404();
@@ -27,19 +27,32 @@ try{
 require'./views/header.php';
 ?>
 
-<h1>Garde numero <?= $event->getId();?></h1>
-<?php // ajouter le nom de l'enfant et de la nourrice dans la garde
-    $utilisateurId = $event->getParent_id();
-    $sql = "SELECT nom,prenom FROM utilisateur WHERE id = $utilisateurId";
-    $statement = $bdd->query($sql);
-    $res = $statement->fetchAll();?>
+<h1>Garde numero <?= $event->getId(); ?></h1>
+<?php
+// ajouter le nom de l'enfant et de la nourrice dans la garde
+$utilisateurId = $event->getParent_id();
+$langueId = $event->getLangue_id();
+$sql = "SELECT nom,prenom FROM utilisateur WHERE id = $utilisateurId";
+$statement = $bdd->query($sql);
+$res = $statement->fetchAll();
+if(isset($langueId)){
+$req = $bdd->query("SELECT Langue FROM Langue WHERE id = $langueId");
+$result = $req->fetch();
+        //var_dump($result);
+}
+?>
+
 <ul>
-    <li>Date début: <?= $event->getDebut_datetime()->format('d/m/Y');?></li>
-    <li>Heure début : <?= $event->getDebut_datetime()->format('H:i');?></li>
-    <li>Date fin: <?= $event->getFin_datetime()->format('d/m/Y');?></li>
-    <li>Heure fin : <?= $event->getFin_datetime()->format('H:i');?></li>
+    <li>Date début: <?= $event->getDebut_datetime()->format('d/m/Y'); ?></li>
+    <li>Heure début : <?= $event->getDebut_datetime()->format('H:i'); ?></li>
+    <li>Date fin: <?= $event->getFin_datetime()->format('d/m/Y'); ?></li>
+    <li>Heure fin : <?= $event->getFin_datetime()->format('H:i'); ?></li>
+    <?php if (isset($result['Langue'])): ?>
+        <li>Langue : <?= $result['Langue'] ?></li>
+        <?php endif; ?>
     <li>Parent :
-        <?= h($res['0']['nom'] . " " . $res['0']['prenom']);
+        <?=
+        h($res['0']['nom'] . " " . $res['0']['prenom']);
         //ajouter les descriptions liées à l'enfant
         ?>
     </li>

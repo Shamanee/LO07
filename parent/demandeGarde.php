@@ -34,7 +34,7 @@ session_start();
             } else if ($_POST['choix'] === 'reguliere'){
                 header('location:demandeGardeReguliere.php');
             } else if ($_POST['choix'] === 'etrangere') {
-                echo 'garde etrangere';
+                header('location:demandeGardeEtrangere.php');
             }
         }
         ?>

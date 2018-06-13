@@ -8,20 +8,14 @@ if ($_SESSION['User_Type'] !== 'parent') {
 //var_dump($_SESSION);
 $jours = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
 ?>
-
 <html>
     <head>
         <meta charset="UTF-8">
         <title></title>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-        <style>
-            .dispo_jour{
-            }
-        </style>
     </head>
     <body>
         <h2>Que recherchez-vous?</h2>
-        <form method="POST" action="demandeGardePonctuelle.php">
+        <form method="POST" action="demandeGardeEtrangere.php">
 
             <label>Choisissez vos enfants à garder</label>
             <?php
@@ -40,20 +34,33 @@ $jours = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche
             <label>choisissez l'horaire de fin</label><br/>
             <input type='time' name='fin' requiered> <br>
 
+
+
+            <?php
+            $r = $bdd->query("SELECT langue FROM langue");
+            echo '<label> Sélectionnez la langue pour la garde : ';
+            $result = $r->fetchAll(PDO::FETCH_COLUMN);
+            select('langue', $result);
+            ?>
             <br/><input type="submit" name='submit' value="Recherche une nounou"/><br/>
         </form>
         <?php
         var_dump($_POST);
         if (isset($_POST['submit'])) {
             //var_dump($_POST);
-            echo '<form method = "POST" action="gardePonctuelle_traitement.php">';
+            echo '<form method = "POST" action="gardeEtrangere_traitement.php">';
             //var_dump($result);
             $array_nounou = [];
             $date = $_POST['date'];
             $date_prest = date_create($date);
             //var_dump($date_prest);
             $j = $date_prest->format('w');
-            $jour = $j - 1;
+            if ($j !== 0) {
+                $jour = $j - 1;
+            } else {
+                $jour = 6;
+            }
+            $langue = $_POST['langue'];
             echo "<br/>Pour le $date, nous vous proposon cette (ces) nounou(s) :<br/>\n";
             $h_deb = $_POST["debut"];
             $h_fin = $_POST["fin"];
@@ -67,7 +74,7 @@ $jours = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche
 //                        var_dump($h_fin);
 //                        var_dump($heure_debut);
 //                        var_dump($heure_fin);
-                $r = $bdd->query("SELECT D.utilisateur_id, D.jour, D.Debut, D.Fin, U.nom FROM disponibilite D, utilisateur U WHERE D.jour=$jour AND D.utilisateur_id = U.id AND U.User_Type='nounou'");
+                $r = $bdd->query("SELECT D.utilisateur_id, D.jour, D.Debut, D.Fin, U.nom, L.Langue FROM disponibilite D, utilisateur U, langue L, utilisateur_has_langue Z WHERE D.jour=$jour AND D.utilisateur_id = U.id AND U.User_Type='nounou' AND U.id=Z.utilisateur_id AND L.Langue='$langue' AND L.id=Z.langue_id");
                 $result = $r->fetchAll(PDO::FETCH_ASSOC);
                 foreach ($result as $res) {
                     //var_dump($res);
@@ -81,13 +88,14 @@ $jours = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche
                         <input type="radio" name='nounou' id='<?= $nom_nounou ?>' value="<?= $nom_nounou ?>"/><label for="<?= $nom_nounou ?>"><?= $nom_nounou ?></label>
                         <input type="hidden" name="heure_debut" value="<?= $_POST["debut"] ?>"/>
                         <input type="hidden" name="heure_fin" value="<?= $_POST["fin"] ?>"/>
-                        <input type="hidden" name='date' value="<?= $_POST['date'] ?>"
+                        <input type="hidden" name='date' value="<?= $_POST['date'] ?>"/>
+                        <input type="hidden" name='langue' value="<?= $_POST['langue'] ?>"/>
                         <?php
                     }
                 }
             }
             ?>
-                   <br/>
+            <br/>
             <br/>
             <input type="submit" name="submit" value='Choisir la nounou'/>
         </form>
@@ -96,3 +104,4 @@ $jours = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche
     ?>
 </body>
 </html>
+

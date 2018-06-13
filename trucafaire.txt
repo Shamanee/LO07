@@ -22,11 +22,10 @@ Voir pour les graph
 Changer les fonction de calcul du benef en fonction des enfants dans la garde
 
 PARENT :
-Pouvoir reserver une garde (peu importe laquelle)
 
-->traitement garde ponctuelle
-->traitement garde reguliere (corriger et continuer)
-->traitement garde etrangere
+->Pour toutes les gardes, corrigé pb du dimanche
+
+Faire en sorte de gérer les restrictions des enfants
 
 
 ADMINISTRATION :
