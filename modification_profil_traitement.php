@@ -20,7 +20,7 @@ if (isset($_POST['submit_photo'])) {
         for ($i = 0; $i < $taille; $i++) {
             $target_file = $target_dir . basename($_FILES["photo"]["name"][$i]);
             $maxsize = 12000000;
-            $extensions_valides = array('jpg', 'jpeg');
+            $extensions_valides = array('jpg', 'jpeg', 'png');
             $extension_upload = strtolower(substr(strrchr($_FILES['photo']['name'][$i], '.'), 1));
             if ($_FILES['photo']['error'][$i] > 0 || !(in_array($extension_upload, $extensions_valides)) || ($_FILES['photo']['size'][$i] > $maxsize)) {
                 echo "Erreur lors du transfert <br />";

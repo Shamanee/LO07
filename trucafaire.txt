@@ -33,6 +33,9 @@ ADMINISTRATION :
 Savoir le chiffre d'affaire (Mois, trimestre, année)
 
 
+Mettre des menus ou boutons retours pour aller d'une page à l'autre
+
+
 
 Corriger toutes les boucles/conditions dont les balises sont fermée (mettre des endfor;/endif; ...)
 ***********************************************

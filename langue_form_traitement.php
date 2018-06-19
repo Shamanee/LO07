@@ -9,12 +9,13 @@ var_dump($_POST);
  */
 $nb_langue = count($_POST['langue']);
 for ($i = 0; $i < $nb_langue; $i++) {
-    var_dump($_POST['langue'][$i]);
+    //var_dump($_POST['langue'][$i]);
     $sql = "SELECT id FROM langue WHERE Langue = '" . $_POST['langue'][$i] . "'";
     $res=$bdd->query($sql);
     while($donnees = $res->fetch()){
-        $req=$bdd->exec("INSERT INTO utilisateur_has_langue (utilisateur_id,langue_id) VALUES (".$_SESSION['id'].",$donnees[0])");
-        var_dump($donnees);
+        //var_dump($donnees);
+        $req=$bdd->exec("INSERT INTO utilisateur_has_langue (utilisateur_id,langue_id) VALUES (".$_SESSION['id'].",".$donnees['id'].")");
+        
     }
 }
 echo 'Vos langues ont été enregistrés, vous allez être redirigé';

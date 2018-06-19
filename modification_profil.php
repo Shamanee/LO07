@@ -41,8 +41,7 @@ require './bdd/connex_bdd.php';
         <form method="POST" action="modification_profil_traitement.php">
             <label>Information</label>
             <textarea name="information">
-                <?php
-                /**
+                <?php /**
                  * Requete a la base de données pour ajouter les informations modifiées dans le tuple correspondant a l'utilisteur
                  */
                 $req=$bdd->prepare('SELECT information FROM utilisateur WHERE id=:id');
@@ -60,7 +59,8 @@ require './bdd/connex_bdd.php';
                 $r=$bdd->prepare('SELECT experience FROM utilisateur WHERE id=:id');
                 $r->execute(array('id'=>$_SESSION['id']));
                 $exp=$r->fetch();
-                echo $info['experience'];
+                //var_dump($exp);
+                //echo 'experience';
                 echo "<label>Experience</label>\n
                     <textarea name='experience'>\n";
                 echo $exp['experience'] . "\n";

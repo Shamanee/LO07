@@ -69,6 +69,7 @@ $jours = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche
 //                        var_dump($heure_fin);
                 $r = $bdd->query("SELECT D.utilisateur_id, D.jour, D.Debut, D.Fin, U.nom FROM disponibilite D, utilisateur U WHERE D.jour=$jour AND D.utilisateur_id = U.id AND U.User_Type='nounou'");
                 $result = $r->fetchAll(PDO::FETCH_ASSOC);
+                //  var_dump($result);
                 foreach ($result as $res) {
                     //var_dump($res);
 
@@ -81,7 +82,7 @@ $jours = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche
                         <input type="radio" name='nounou' id='<?= $nom_nounou ?>' value="<?= $nom_nounou ?>"/><label for="<?= $nom_nounou ?>"><?= $nom_nounou ?></label>
                         <input type="hidden" name="heure_debut" value="<?= $_POST["debut"] ?>"/>
                         <input type="hidden" name="heure_fin" value="<?= $_POST["fin"] ?>"/>
-                        <input type="hidden" name='date' value="<?= $_POST['date'] ?>"
+                        <input type="hidden" name='date' value="<?= $_POST['date'] ?>"/>
                         <?php
                     }
                 }

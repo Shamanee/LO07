@@ -31,11 +31,13 @@ session_start();
                 var_dump($res[0]);
                 $req = $bdd->query("SELECT COUNT(*) FROM utilisateur_has_langue WHERE utilisateur_id='".$_SESSION['id']."'");
                 $resu=$req->fetchAll();
-                var_dump($resu);
-                if ($res[0] == '0') {
+                var_dump($resu[0]);
+                if ($res[0]['COUNT(jour)'] === '0') {
+                    echo'etst';
                     echo '<script>premiere_co_nounou_dispo()</script>';
                 }
-                if ($resu[0]=='0'){
+                if ($resu[0]['COUNT(*)']==='0'){
+                    echo 'test';
                     echo '<script>premiere_co_nounou_langue()</script>';
                 }
                 
