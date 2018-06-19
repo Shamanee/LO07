@@ -27,6 +27,8 @@ PARENT :
 
 Faire en sorte de gérer les restrictions des enfants
 
+Afficher le prix de la réservation correctement
+
 
 ADMINISTRATION :
 

@@ -51,6 +51,10 @@ $jours = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche
                     $array_nounou = [];
                     $jour = $_POST[$value];
                     if (isset($jour)) {
+                        ?>
+                        <label>Choisissez vos enfants à garder</label>
+                        
+                        <?php
                         echo "<br/>Pour le $value, nous vous proposon cette (ces) nounou(s) :<br/>\n";
                         $h_deb = $_POST["heure_debut_" . $jour . ""];
                         $h_fin = $_POST["heure_fin_" . $jour . ""];
@@ -76,8 +80,8 @@ $jours = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche
                                 ?>
 
                                 <input type="radio" name='nounou_<?= $res['jour'] ?>' id='<?= $nom_nounou ?>' value="<?= $nom_nounou ?>"/><label for="<?= $nom_nounou ?>"><?= $nom_nounou ?></label>
-                                <input type="hidden" name="heure_debut_<?=$res['jour']?>" value="<?= $_POST["heure_debut_$jour"]?>"/>
-                                <input type="hidden" name="heure_fin_<?=$res['jour']?>" value="<?= $_POST["heure_fin_$jour"]?>"/>
+                                <input type="hidden" name="heure_debut_<?= $res['jour'] ?>" value="<?= $_POST["heure_debut_$jour"] ?>"/>
+                                <input type="hidden" name="heure_fin_<?= $res['jour'] ?>" value="<?= $_POST["heure_fin_$jour"] ?>"/>
                                 <?php
                             }
                         }
@@ -86,7 +90,7 @@ $jours = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche
             }
             ?>
             <br/>
-            <input type="hidden" name="datemax" value="<?= $_POST['datemax']?>"/>
+            <input type="hidden" name="datemax" value="<?= $_POST['datemax'] ?>"/>
             <input type="submit" name="submit" value='Choisir la nounou'/>
         </form>
         <?php

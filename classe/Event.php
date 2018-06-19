@@ -18,6 +18,7 @@ class Event {
     private $fin_datetime;
     private $utilisateur_id;
     private $langue_id;
+    private $enfant_id;
 
 
     /**
@@ -62,6 +63,10 @@ class Event {
     
     public function getLangue_id(){
     return $this->langue_id;
+    }
+    
+    public function getEnfant_id(){
+        return $this->enfant_id;
     }
 
 }

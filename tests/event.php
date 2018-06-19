@@ -32,13 +32,15 @@ require'./views/header.php';
 // ajouter le nom de l'enfant et de la nourrice dans la garde
 $utilisateurId = $event->getParent_id();
 $langueId = $event->getLangue_id();
+$enfantId = $event->getEnfant_id();
+$eventId = $event->getId();
 $sql = "SELECT nom,prenom FROM utilisateur WHERE id = $utilisateurId";
 $statement = $bdd->query($sql);
 $res = $statement->fetchAll();
-if(isset($langueId)){
-$req = $bdd->query("SELECT Langue FROM Langue WHERE id = $langueId");
-$result = $req->fetch();
-        //var_dump($result);
+if (isset($langueId)) {
+    $req = $bdd->query("SELECT Langue FROM Langue WHERE id = $langueId");
+    $result = $req->fetch();
+    //var_dump($result);
 }
 ?>
 
@@ -49,12 +51,24 @@ $result = $req->fetch();
     <li>Heure fin : <?= $event->getFin_datetime()->format('H:i'); ?></li>
     <?php if (isset($result['Langue'])): ?>
         <li>Langue : <?= $result['Langue'] ?></li>
-        <?php endif; ?>
+    <?php endif; ?>
     <li>Parent :
         <?=
         h($res['0']['nom'] . " " . $res['0']['prenom']);
         //ajouter les descriptions liées à l'enfant
         ?>
+    </li>
+    <li>Enfants :
+        <ul>
+
+
+            <?php
+            $reqq = $bdd->query("SELECT E.prenom FROM enfant E, prestation P, prestation_has_enfant Z WHERE P.id=$eventId AND P.id=Z.prestation_id AND Z.enfant_utilisateur_id=$utilisateurId AND Z.enfant_utilisateur_id=P.parent_id AND E.id=Z.enfant_id");
+            while ($ress = $reqq->fetch()) {
+                echo "<li>" . $ress['prenom'] . "</li>";
+            }
+            ?>
+        </ul>
     </li>
 </ul>
 

@@ -84,11 +84,16 @@ $jours = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche
                         <input type="hidden" name="heure_fin" value="<?= $_POST["fin"] ?>"/>
                         <input type="hidden" name='date' value="<?= $_POST['date'] ?>"/>
                         <?php
+                        foreach ($_POST['enfant'] as $enfant):
+                            ?>
+                        <input type="hidden" name="enfant[]" value="<?= $enfant ?>"/>
+                            <?php
+                        endforeach;
                     }
                 }
             }
             ?>
-                   <br/>
+            <br/>
             <br/>
             <input type="submit" name="submit" value='Choisir la nounou'/>
         </form>

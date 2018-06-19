@@ -52,6 +52,7 @@ $end = (clone $start);
 $end = $end->modify('+' . (6 + 7 * ($weeks - 1)) . ' days');
 $events = $events->getPrestationBetweenByDay($start, $end);
 require'./views/header.php';
+
 //dd($events);
 ?>
 <div class="d-flex flex-row align-items-center justify-content-between mx-sm-2">
@@ -97,22 +98,26 @@ require'./views/header.php';
                         <div>
                             <?php
                             $parentId = $event['parent_id'];
-                            $nounouId = $_SESSION['id'];
-                            $sql = "SELECT U.nom FROM utilisateur U, prestation P WHERE U.id=$parentId AND P.nounou_id=$nounouId";
-                            $req = $bdd->query($sql);
-                            $res = $req->fetchAll();
-                            //var_dump($res);
-                            if (!empty($res)):
-                                ?>
-                                <?= (new DateTime($event['debut_datetime']))->format('H:i'); ?> - <?= (new DateTime($event['fin_datetime']))->format('H:i'); ?> - <a href="event.php?id=<?= $event['id']; ?>"><?= $res['0']['nom'];
-                                ?></a>
-                            <?php endif; ?>
-                        </div>
-                    <?php } ?>
+                            if ($_SESSION['id'] === $event['nounou_id']) {
+                                $nounouId = $_SESSION['id'];
+
+                                $sql = "SELECT U.nom, P.nounou_id FROM utilisateur U, prestation P WHERE U.id=$parentId AND U.id=P.parent_id AND P.nounou_id=$nounouId";
+                                $req = $bdd->query($sql);
+                                $res = $req->fetchAll();
+
+                                //var_dump($res);
+                                if (!empty($res)):
+                                    ?>
+                                    <?= (new DateTime($event['debut_datetime']))->format('H:i'); ?> - <?= (new DateTime($event['fin_datetime']))->format('H:i'); ?> - <a href="event.php?id=<?= $event['id']; ?>"><?= $res['0']['nom'];
+                                    ?></a>
+                                <?php endif; ?>
+                            </div>
+                        <?php }
+                    } ?>
                 </td>
-            <?php } ?>
+        <?php } ?>
         </tr>
-    <?php } ?>
+<?php } ?>
 </table>
 
 <?php
