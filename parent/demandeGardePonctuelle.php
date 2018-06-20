@@ -53,7 +53,11 @@ $jours = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche
             $date_prest = date_create($date);
             //var_dump($date_prest);
             $j = $date_prest->format('w');
-            $jour = $j - 1;
+            if ($j != 0) {
+                $jour = $j - 1;
+            } else {
+                $jour = 6;
+            }
             echo "<br/>Pour le $date, nous vous proposon cette (ces) nounou(s) :<br/>\n";
             $h_deb = $_POST["debut"];
             $h_fin = $_POST["fin"];
@@ -86,7 +90,7 @@ $jours = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche
                         <?php
                         foreach ($_POST['enfant'] as $enfant):
                             ?>
-                        <input type="hidden" name="enfant[]" value="<?= $enfant ?>"/>
+                            <input type="hidden" name="enfant[]" value="<?= $enfant ?>"/>
                             <?php
                         endforeach;
                     }
@@ -98,6 +102,13 @@ $jours = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche
             <input type="submit" name="submit" value='Choisir la nounou'/>
         </form>
         <?php
+        echo "<br/>";
+        echo $enfant + 1 . " enfants<br/>";
+
+        echo "prix à payer : ";
+        require './function_prix.php';
+        calculPrix_ponctuelle($_POST["debut"], $_POST["fin"], $enfant + 1);
+        echo " &euro;";
     }
     ?>
 </body>

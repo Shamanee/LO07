@@ -91,6 +91,11 @@ $jours = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche
                         <input type="hidden" name='date' value="<?= $_POST['date'] ?>"/>
                         <input type="hidden" name='langue' value="<?= $_POST['langue'] ?>"/>
                         <?php
+                        foreach ($_POST['enfant'] as $enfant):
+                            ?>
+                            <input type="hidden" name="enfant[]" value="<?= $enfant ?>"/>
+                            <?php
+                        endforeach;
                     }
                 }
             }
@@ -100,6 +105,13 @@ $jours = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche
             <input type="submit" name="submit" value='Choisir la nounou'/>
         </form>
         <?php
+        echo "<br/>";
+        echo $enfant + 1 . " enfants<br/>";
+
+        echo "prix à payer : ";
+        require './function_prix.php';
+        calculPrix_etrangere($_POST["debut"], $_POST["fin"], $enfant + 1);
+        echo " &euro;";
     }
     ?>
 </body>

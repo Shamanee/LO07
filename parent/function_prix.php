@@ -5,8 +5,28 @@ function calculPrix_ponctuelle($heure_debut, $heure_fin, $nbEnfant) {
     $hd = intval($heure_debut);
     $hf = intval($heure_fin);
     $heure = $hf - $hd;
-    $prix = (7+$nbEnfant*4) * $heure;
+    $prix = (7+(($nbEnfant-1)*4)) * $heure;
     echo $prix;
+    return $prix;
+}
+
+function calculPrix_etrangere($heure_debut, $heure_fin, $nbEnfant) {
+    $prix = 0;
+    $hd = intval($heure_debut);
+    $hf = intval($heure_fin);
+    $heure = $hf - $hd;
+    $prix = (15*$nbEnfant) * $heure;
+    echo $prix;
+    return $prix;
+}
+
+function calculPrix_reguliere_par_jour($heure_debut, $heure_fin, $nbEnfant) {
+    $prix = 0;
+    $hd = intval($heure_debut);
+    $hf = intval($heure_fin);
+    $heure = $hf - $hd;
+    $prix = (10+5*($nbEnfant-1)) * $heure;
+    //echo $prix;
     return $prix;
 }
 

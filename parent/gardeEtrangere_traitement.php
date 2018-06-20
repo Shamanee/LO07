@@ -13,6 +13,8 @@ $date = date_create($_POST['date']);
 
 $debut_datetime = $date->format("Y-m-d {$h_debut}:s");
 $fin_datetime = $date->format("Y-m-d {$h_fin}:s");
+//var_dump($debut_datetime);
+//var_dump($fin_datetime);
 
 echo "Vous avez choisi la nounou suivante pour le " . $_POST['date'] . " : ";
 echo $_POST["nounou"] . "<br/>\n";
@@ -32,5 +34,22 @@ $req->execute(array(
     'nounou_id' => $result['id'],
     'langue_id' => $result1['id']
 ));
-var_dump($req);
+//var_dump($req);
+
+echo "Les enfants sont :";
+echo "<ul>";
+foreach ($_POST['enfant'] as $k => $enfant) {
+    echo "<li>$enfant</li>";
+    $reeq = $bdd->query("SELECT E.id AS id_enfant, P.id from enfant E, prestation P WHERE E.Prenom='" . $enfant . "' AND E.utilisateur_id=" . $_SESSION['id'] . " AND P.parent_id = ".$_SESSION['id']." AND P.debut_datetime='$debut_datetime' AND P.fin_datetime='$fin_datetime'");
+    while($rees = $reeq->fetch()){
+    var_dump($rees);
+    $request = $bdd->prepare("INSERT INTO prestation_has_enfant (prestation_id, enfant_id,enfant_utilisateur_id) VALUES (:prestation_id, :enfant_id, :enfant_utilisateur_id)");
+    $request->execute(array(
+    'prestation_id' => $rees['id'],
+    'enfant_id' => $rees['id_enfant'],
+    'enfant_utilisateur_id' => $_SESSION['id'],
+    ));
+    }
+}
+echo"</ul>";
 

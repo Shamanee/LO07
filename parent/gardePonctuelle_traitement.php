@@ -13,8 +13,8 @@ $date = date_create($_POST['date']);
 
 $debut_datetime = $date->format("Y-m-d {$h_debut}:s");
 $fin_datetime = $date->format("Y-m-d {$h_fin}:s");
-var_dump($debut_datetime);
-var_dump($fin_datetime);
+//var_dump($debut_datetime);
+//var_dump($fin_datetime);
 
 echo "Vous avez choisi la nounou suivante pour le " . $_POST['date'] . " : ";
 echo $_POST["nounou"] . "<br/>\n";
@@ -53,10 +53,10 @@ foreach ($_POST['enfant'] as $k => $enfant) {
     }
 }
 echo"</ul>";
-echo $k + 1 . " enfants";
-
-echo "prix à payer : ";
-require './function_prix.php';
-calculPrix_ponctuelle($h_debut, $h_fin, $k+1);
-echo " &euro;";
+//echo $k + 1 . " enfants";
+//
+//echo "prix à payer : ";
+//require './function_prix.php';
+//calculPrix_ponctuelle($h_debut, $h_fin, $k+1);
+//echo " &euro;";
 
