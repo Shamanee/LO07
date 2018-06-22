@@ -7,6 +7,7 @@ if ($_SESSION['User_Type'] !== 'parent') {
 }
 //var_dump($_SESSION);
 $jours = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
+$k=-1;
 ?>
 <html>
     <head>
@@ -45,7 +46,7 @@ $jours = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche
             <br/><input type="submit" name='submit' value="Recherche une nounou"/><br/>
         </form>
         <?php
-        var_dump($_POST);
+        //var_dump($_POST);
         if (isset($_POST['submit'])) {
             //var_dump($_POST);
             echo '<form method = "POST" action="gardeEtrangere_traitement.php">';
@@ -76,27 +77,32 @@ $jours = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche
 //                        var_dump($heure_fin);
                 $r = $bdd->query("SELECT D.utilisateur_id, D.jour, D.Debut, D.Fin, U.nom, L.Langue FROM disponibilite D, utilisateur U, langue L, utilisateur_has_langue Z WHERE D.jour=$jour AND D.utilisateur_id = U.id AND U.User_Type='nounou' AND U.id=Z.utilisateur_id AND L.Langue='$langue' AND L.id=Z.langue_id");
                 $result = $r->fetchAll(PDO::FETCH_ASSOC);
-                foreach ($result as $res) {
-                    //var_dump($res);
+                //var_dump($result);
+                if (!empty($result)) {
+                    foreach ($result as $res) {
+                        //var_dump($res);
 
-                    if ($heure_debut >= $res['Debut'] && $heure_fin <= $res['Fin']) {
-                        //$array_nounou[] = $res['nom'];
-                        $nom_nounou = $res['nom'];
-                        //var_dump($res['nom']);
-                        ?>
-
-                        <input type="radio" name='nounou' id='<?= $nom_nounou ?>' value="<?= $nom_nounou ?>"/><label for="<?= $nom_nounou ?>"><?= $nom_nounou ?></label>
-                        <input type="hidden" name="heure_debut" value="<?= $_POST["debut"] ?>"/>
-                        <input type="hidden" name="heure_fin" value="<?= $_POST["fin"] ?>"/>
-                        <input type="hidden" name='date' value="<?= $_POST['date'] ?>"/>
-                        <input type="hidden" name='langue' value="<?= $_POST['langue'] ?>"/>
-                        <?php
-                        foreach ($_POST['enfant'] as $enfant):
+                        if ($heure_debut >= $res['Debut'] && $heure_fin <= $res['Fin']) {
+                            //$array_nounou[] = $res['nom'];
+                            $nom_nounou = $res['nom'];
+                            //var_dump($res['nom']);
                             ?>
-                            <input type="hidden" name="enfant[]" value="<?= $enfant ?>"/>
+
+                            <input type="radio" name='nounou' id='<?= $nom_nounou ?>' value="<?= $nom_nounou ?>"/><label><a href="../profil-nounou.php?nom=<?=$nom_nounou?>"><?= $nom_nounou ?></a></label>
+                            <input type="hidden" name="heure_debut" value="<?= $_POST["debut"] ?>"/>
+                            <input type="hidden" name="heure_fin" value="<?= $_POST["fin"] ?>"/>
+                            <input type="hidden" name='date' value="<?= $_POST['date'] ?>"/>
+                            <input type="hidden" name='langue' value="<?= $_POST['langue'] ?>"/>
                             <?php
-                        endforeach;
+                            foreach ($_POST['enfant'] as $k => $enfant):
+                                ?>
+                                <input type="hidden" name="enfant[]" value="<?= $enfant ?>"/>
+                                <?php
+                            endforeach;
+                        }
                     }
+                } else {
+                    echo 'Aucun résultat';
                 }
             }
             ?>
@@ -105,13 +111,15 @@ $jours = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche
             <input type="submit" name="submit" value='Choisir la nounou'/>
         </form>
         <?php
-        echo "<br/>";
-        echo $enfant + 1 . " enfants<br/>";
+        if ($k >= 0) {
+            echo "<br/>";
+            echo $k + 1 . " enfants<br/>";
 
-        echo "prix à payer : ";
-        require './function_prix.php';
-        calculPrix_etrangere($_POST["debut"], $_POST["fin"], $enfant + 1);
-        echo " &euro;";
+            echo "prix à payer : ";
+            require './function_prix.php';
+            calculPrix_etrangere($_POST["debut"], $_POST["fin"], $k + 1);
+            echo " &euro;";
+        }
     }
     ?>
 </body>

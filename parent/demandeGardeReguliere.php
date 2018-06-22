@@ -42,7 +42,7 @@ $jours = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche
         </form>
         <?php
         if (isset($_POST['submit'])) {
-            var_dump($_POST);
+            //var_dump($_POST);
             echo '<form method = "POST" action="gardeReguliere_traitement.php">';
             foreach ($jours as $k => $value) {
 
@@ -85,7 +85,7 @@ $jours = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche
                         //var_dump($res['nom']);
                         ?>
 
-                        <input type="radio" name='nounou_<?=  $res  [ 'jour'] ?>' id='<?= $nom_nounou ?>' value="<?= $nom_nounou ?>"/><label for="<?= $nom_nounou ?>"><?= $nom_nounou ?></label>
+                        <input type="radio" name='nounou_<?=  $res  [ 'jour'] ?>' id='<?= $nom_nounou ?>' value="<?= $nom_nounou ?>"/><label><a href="../profil-nounou.php?nom=<?=$nom_nounou?>"><?= $nom_nounou ?></a></label>
                         <input type="hidden" name="heure_debut_<?= $res['jour'] ?>" value="<?= $_POST["heure_debut_$jour"] ?>"/>
                         <input type="hidden" name="heure_fin_<?= $res['jour'] ?>" value="<?= $_POST["heure_fin_$jour"] ?>"/>
                         <?php

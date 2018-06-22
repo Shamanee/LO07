@@ -6,11 +6,11 @@ if ($_SESSION['User_Type'] !== 'parent') {
 }
 require '../bdd/connex_bdd.php';
 require './function_prix.php';
-var_dump($_POST);
+//var_dump($_POST);
 $jours = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
 $d = new DateTime('now');
 $datemax = date_create($_POST['datemax']);
-var_dump($datemax);
+//var_dump($datemax);
 $datetime = new DateTime('now');
 $enf = array_unique($_POST['enfant']);
 do {
@@ -32,13 +32,14 @@ do {
             //var_dump($_SESSION['id']);
             $requete = $bdd->query("SELECT id FROM utilisateur WHERE User_Type='nounou' AND nom='" . $_POST["nounou_$k"] . "'");
             $result = $requete->fetch();
-            var_dump($result);
-            $req = $bdd->prepare("INSERT INTO prestation (debut_datetime,fin_datetime,parent_id,nounou_id) VALUES (:debut_datetime, :fin_datetime, :parent_id, :nounou_id)");
+            //var_dump($result);
+            $req = $bdd->prepare("INSERT INTO prestation (debut_datetime,fin_datetime,parent_id,nounou_id,type) VALUES (:debut_datetime, :fin_datetime, :parent_id, :nounou_id, :type)");
             $req->execute(array(
                 'debut_datetime' => $debut_datetime,
                 'fin_datetime' => $fin_datetime,
                 'parent_id' => $_SESSION['id'],
                 'nounou_id' => $result['id'],
+                'type' => 'reguliere',
             ));
             echo "Les enfants sont :";
             echo "<ul>";
@@ -48,7 +49,7 @@ do {
                 echo "<li>$enfant</li>";
                 $reeq = $bdd->query("SELECT E.id AS id_enfant, P.id from enfant E, prestation P WHERE E.Prenom='" . $enfant . "' AND E.utilisateur_id=" . $_SESSION['id'] . " AND P.parent_id = " . $_SESSION['id'] . " AND P.debut_datetime='$debut_datetime' AND P.fin_datetime='$fin_datetime'");
                 while ($rees = $reeq->fetch()) {
-                    var_dump($rees);
+                    //var_dump($rees);
                     $request = $bdd->prepare("INSERT INTO prestation_has_enfant (prestation_id, enfant_id,enfant_utilisateur_id) VALUES (:prestation_id, :enfant_id, :enfant_utilisateur_id)");
                     $request->execute(array(
                         'prestation_id' => $rees['id'],
@@ -72,6 +73,8 @@ do {
     //var_dump($d);
     //var_dump($date);
 } while ($d < $datemax->modify("last sunday"));
+?>
+<a href="../accueil.php">Retour à l'accueil</a>
 
 
 

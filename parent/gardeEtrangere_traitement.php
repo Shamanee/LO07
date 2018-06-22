@@ -22,27 +22,31 @@ echo "La garde sera en ".$_POST['langue'].".";
 
 $requete = $bdd->query("SELECT U.id FROM utilisateur U, langue L, utilisateur_has_langue Z WHERE U.User_Type='nounou' AND U.nom='" . $_POST["nounou"] . "' AND Z.utilisateur_id=U.id AND L.Langue='".$_POST['langue']."' AND Z.langue_id=L.id");
 $result = $requete->fetch();
-var_dump($result);
+//var_dump($result);
 $requete1 = $bdd->query("SELECT L.id FROM utilisateur U, langue L, utilisateur_has_langue Z WHERE U.User_Type='nounou' AND U.nom='" . $_POST["nounou"] . "' AND Z.utilisateur_id=U.id AND L.Langue='".$_POST['langue']."' AND Z.langue_id=L.id");
 $result1 = $requete1->fetch();
 
-$req = $bdd->prepare("INSERT INTO prestation (debut_datetime,fin_datetime,parent_id,nounou_id,langue_id) VALUES (:debut_datetime, :fin_datetime, :parent_id, :nounou_id, :langue_id)");
+$req = $bdd->prepare("INSERT INTO prestation (debut_datetime,fin_datetime,parent_id,nounou_id,langue_id,type) VALUES (:debut_datetime, :fin_datetime, :parent_id, :nounou_id, :langue_id, :type)");
 $req->execute(array(
     'debut_datetime' => $debut_datetime,
     'fin_datetime' => $fin_datetime,
     'parent_id' => $_SESSION['id'],
     'nounou_id' => $result['id'],
-    'langue_id' => $result1['id']
+    'langue_id' => $result1['id'],
+    'type' => 'etrangere',
 ));
 //var_dump($req);
 
 echo "Les enfants sont :";
 echo "<ul>";
-foreach ($_POST['enfant'] as $k => $enfant) {
+
+$enf = array_unique($_POST['enfant']);
+foreach ($enf as $k => $enfant) {
+    //var_dump($enfant);
     echo "<li>$enfant</li>";
     $reeq = $bdd->query("SELECT E.id AS id_enfant, P.id from enfant E, prestation P WHERE E.Prenom='" . $enfant . "' AND E.utilisateur_id=" . $_SESSION['id'] . " AND P.parent_id = ".$_SESSION['id']." AND P.debut_datetime='$debut_datetime' AND P.fin_datetime='$fin_datetime'");
     while($rees = $reeq->fetch()){
-    var_dump($rees);
+    //var_dump($rees);
     $request = $bdd->prepare("INSERT INTO prestation_has_enfant (prestation_id, enfant_id,enfant_utilisateur_id) VALUES (:prestation_id, :enfant_id, :enfant_utilisateur_id)");
     $request->execute(array(
     'prestation_id' => $rees['id'],
@@ -52,4 +56,6 @@ foreach ($_POST['enfant'] as $k => $enfant) {
     }
 }
 echo"</ul>";
+?>
+<a href="../accueil.php">Retour à l'accueil</a>
 

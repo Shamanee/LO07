@@ -43,7 +43,7 @@ $jours = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche
             <br/><input type="submit" name='submit' value="Recherche une nounou"/><br/>
         </form>
         <?php
-        var_dump($_POST);
+        //var_dump($_POST);
         if (isset($_POST['submit'])) {
             //var_dump($_POST);
             echo '<form method = "POST" action="gardePonctuelle_traitement.php">';
@@ -83,12 +83,13 @@ $jours = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche
                         //var_dump($res['nom']);
                         ?>
 
-                        <input type="radio" name='nounou' id='<?= $nom_nounou ?>' value="<?= $nom_nounou ?>"/><label for="<?= $nom_nounou ?>"><?= $nom_nounou ?></label>
+        <input type="radio" name='nounou' id='<?= $nom_nounou ?>' value="<?= $nom_nounou ?>"/><label><a href="../profil-nounou.php?nom=<?=$nom_nounou?>"><?= $nom_nounou ?></a></label>
                         <input type="hidden" name="heure_debut" value="<?= $_POST["debut"] ?>"/>
                         <input type="hidden" name="heure_fin" value="<?= $_POST["fin"] ?>"/>
                         <input type="hidden" name='date' value="<?= $_POST['date'] ?>"/>
                         <?php
-                        foreach ($_POST['enfant'] as $enfant):
+                        foreach ($_POST['enfant'] as $k => $enfant):
+                            //var_dump($enfant);
                             ?>
                             <input type="hidden" name="enfant[]" value="<?= $enfant ?>"/>
                             <?php
@@ -103,11 +104,11 @@ $jours = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche
         </form>
         <?php
         echo "<br/>";
-        echo $enfant + 1 . " enfants<br/>";
+        echo $k + 1 . " enfants<br/>";
 
         echo "prix à payer : ";
         require './function_prix.php';
-        calculPrix_ponctuelle($_POST["debut"], $_POST["fin"], $enfant + 1);
+        calculPrix_ponctuelle($_POST["debut"], $_POST["fin"], $k + 1);
         echo " &euro;";
     }
     ?>

@@ -5,34 +5,21 @@
 
 Peut etre séparer les 2 formulaires
 
+/!\FAIRE LA PARTIE FRONT DU SITE/!\
+
 BASE DE DONNEES :
-Prestation : Ajouter la langue optionnelle
-		Ajouter le type de prestation
 Evaluation : Ajouter la date
-		Parent_id et Nounou_id
 Revoir toutes les tables pour vérifier
 
 NOUNOU :
-
-Supprimer planning.php
-Supprimer planning_test.php
-Supprimer Calendrier.php
-
-Voir pour les graph
-Changer les fonction de calcul du benef en fonction des enfants dans la garde
+	
 
 PARENT :
-
-->Pour toutes les gardes, corrigé pb du dimanche
-
-Faire en sorte de gérer les restrictions des enfants
-
-Afficher le prix de la réservation correctement
 
 
 ADMINISTRATION :
 
-Savoir le chiffre d'affaire (Mois, trimestre, année)
+Trier nounous par bénef (elemsort.js)
 
 
 Mettre des menus ou boutons retours pour aller d'une page à l'autre

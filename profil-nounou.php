@@ -4,7 +4,10 @@ To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
-<?php require './bdd/connex_bdd.php'; ?>
+
+<?php 
+session_start();
+require './bdd/connex_bdd.php'; ?>
 <html>
     <head>
         <meta charset="UTF-8">
@@ -12,6 +15,19 @@ and open the template in the editor.
     </head>
     <body>
         <?php
+        $photoprofil = $bdd->prepare('SELECT photo FROM utilisateur WHERE nom=:nom AND User_Type="nounou"');
+        $photoprofil->execute(array('nom' => $_GET['nom']));
+
+        while ($donnees = $photoprofil->fetch()) {
+            var_dump($donnees);
+            if (isset($donnees['photo'])) {
+                echo "<img src='" . $donnees['photo'] . "' name='photo_profil' alt='Photo de profil' height='100px'/><br/>\n";
+            } else {
+                echo "<img src='photo/blank_photo' name='photo_profil' alt='Photo de profil' height='100px'/><br/>\n";
+            }
+        }
+        $photoprofil->closeCursor();
+        
         $jours = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
         $re = $bdd->query("SELECT COUNT(D.jour), U.id FROM disponibilite D, utilisateur U WHERE U.nom ='" . $_GET['nom'] . "' AND D.utilisateur_id=U.id");
         $res = $re->fetch();
@@ -59,10 +75,13 @@ and open the template in the editor.
 
             <?php
         }
+        if($_SESSION['User_Type']==='admin'):
         ?>
         <h2>Les bénéfices</h2>
         <h3>Mensuel : </h3><?= calculBenefNounouMois($res['id']) ?>&euro;<br/>
         <h3>Hebdomadaire :</h3><?= calculBenefNounouSemaine($res['id']) ?>&euro;<br/>
+        <?php endif; ?>
+        
         <h2>Les Evaluations</h2>
 
         <table>
