@@ -8,3 +8,45 @@ body, html {
     color: #000;
     height: 100%;
 }
+
+.container-fluid {
+    padding: 0px;
+}
+
+.bg-1{
+    margin-top: 0;
+    /*background-image: url("../photo/fond1.jpg");*/
+    background-color: #8383c6;
+}
+
+.bg-2{
+    background-color: #EEE;
+}
+
+.texte-1 h3{
+    margin: 5px;
+    padding: 10px;
+}
+
+.texte-1 p{
+    margin-top: 15px;
+    padding: 10px;
+    text-align: justify;
+    text-justify: inter-word;
+}
+
+#loginbox {
+    margin-top: 25px;
+    padding: 25px;
+}
+
+.icon{
+    margin-top: 25px;
+}
+
+footer{
+    padding: 25px;
+    color: #FFF;
+    background: #000;
+    width: 100%;
+}
