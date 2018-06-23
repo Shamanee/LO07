@@ -1,9 +1,9 @@
 <?php
 session_start();
 //require '../bdd/connex_bdd.php';
-//if ($_SESSION['User_Type'] !== 'parent') {
-//    header('Location:error403.html');
-//}
+if ($_SESSION['User_Type'] !== 'parent') {
+    header('Location:error403.html');
+}
 //var_dump($_SESSION);
 //$jours = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
 ?>
@@ -18,6 +18,9 @@ session_start();
         </style>
     </head>
     <body>
+        <?php
+        require './menu_parent.php';
+        ?>
         <h2>Que recherchez-vous?</h2>
 
         <form method="POST" action='demandeGarde.php'>

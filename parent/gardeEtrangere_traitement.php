@@ -5,7 +5,7 @@ if ($_SESSION['User_Type'] !== 'parent') {
     header('Location:../error403.html');
 }
 require '../bdd/connex_bdd.php';
-
+require './menu_parent.php';
 $h_debut = $_POST["heure_debut"];
 $h_fin = $_POST["heure_fin"];
 

@@ -15,6 +15,7 @@ require './bdd/connex_bdd.php'; ?>
     </head>
     <body>
         <?php
+         require './menu.php';
         $photoprofil = $bdd->prepare('SELECT photo FROM utilisateur WHERE nom=:nom AND User_Type="nounou"');
         $photoprofil->execute(array('nom' => $_GET['nom']));
 

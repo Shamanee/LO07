@@ -20,6 +20,7 @@ $jours = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche
         </style>
     </head>
     <body>
+        <?php require './menu_parent.php'; ?>
         <h2>Que recherchez-vous?</h2>
         <form method="POST" action="demandeGardePonctuelle.php">
 

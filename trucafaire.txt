@@ -19,8 +19,6 @@ PARENT :
 
 ADMINISTRATION :
 
-Trier nounous par bénef (elemsort.js)
-
 
 Mettre des menus ou boutons retours pour aller d'une page à l'autre
 

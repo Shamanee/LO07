@@ -6,6 +6,7 @@ if ($_SESSION['User_Type'] !== 'parent') {
 }
 require '../bdd/connex_bdd.php';
 require './function_prix.php';
+require './menu_parent.php';
 //var_dump($_POST);
 $jours = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
 $d = new DateTime('now');

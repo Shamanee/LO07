@@ -12,6 +12,13 @@ session_start();
         <meta charset="UTF-8">
         <meta author="Timothée Drouot, Thomas Conroux">
         <title>Projet LO07</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/style.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
     </head>
     <body>
         <?php
@@ -22,7 +29,7 @@ session_start();
         if(isset($_SESSION['User_Type'])){
             if($_SESSION['User_Type']=='parent'||$_SESSION['User_Type']=='nounou'||$_SESSION['User_Type']=='admin'||$_SESSION['User_Type']=='pending'){
                 echo "Vous etes déjà connecté";
-                header('Refresh:2; url=accueil.php');
+                header('Refresh:1; url=accueil.php');
             }
         }else{
         ?>
@@ -34,6 +41,9 @@ session_start();
             <input type="submit" value="Connexion"/>
         </form>
         <p>Pas de compte ? <a href="inscription.php">Inscrivez-vous !</a></p>
+        
+        <p>super-nounou.fr</p>
+        <p>Trouvez la nounou qui convient le mieux à vos enfants.</p>
         <?php
         }
         ?>

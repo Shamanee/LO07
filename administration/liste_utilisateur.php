@@ -1,7 +1,8 @@
 <script src='./sortElements.js'></script>
 
-<?php //require '../bdd/connex_bdd.php';
- //require './administration/function.php';
+<?php
+//require '../bdd/connex_bdd.php';
+//require './administration/function.php';
 ?>
 <button id='btn_utilisateur'>Utilisateurs</button>
 <button id='btn_nounou'>Nounous</button>
@@ -48,8 +49,8 @@
             <th id='nomnounou'>Nom</th>
             <th>Email</th>
             <th>Ville</th>
-            <th id='benefmois'>Bénéfice Mensuel</th>
-            <th id="benefsem">Bénéfice Hebdomadaire</th>
+            <th id='benefmois'>Bénéfice Mensuel (&euro;)</th>
+            <th id="benefsem">Bénéfice Hebdomadaire(&euro;)</th>
             <th>Bloquer</th>
             <th>Profil</th>
         </tr>
@@ -62,14 +63,14 @@
             if ($donnees['User_Type'] === 'nounou') {
                 $benefmois = calculBenefNounouMois($donnees['id']);
                 $benefsem = calculBenefNounouSemaine($donnees['id']);
-                echo "<tr>\n\t<td>" . $donnees['prenom'] . "</td>\n<td>" . $donnees['nom'] . "</td>\n<td>" . $donnees['email'] . "</td>\n<td>" . $donnees['ville'] . "</td>\n<td>" . $benefmois . "&euro;</td>\n<td>" . $benefsem . "&euro;</td>\n<td>"
+                echo "<tr>\n\t<td>" . $donnees['prenom'] . "</td>\n<td>" . $donnees['nom'] . "</td>\n<td>" . $donnees['email'] . "</td>\n<td>" . $donnees['ville'] . "</td>\n<td>" . $benefmois . "</td>\n<td>" . $benefsem . "</td>\n<td>"
                 . "<form method='POST' action='administration_traitement.php'>"
                 . "<input type='submit' class='button' value='Bloquer' name='bloquer' onclick=\"return confirm('Vous allez bloquer cette personne, êtes vous sûr ?');\"/>"
                 . "<input type='hidden' name='idblock' value='" . $donnees['id'] . "'/>"
                 . "</form></td>\n"
-                . "<td><a href='profil-nounou.php?nom=".$donnees['nom']."'>Profil</a></td>\n</tr>";
+                . "<td><a href='profil-nounou.php?nom=" . $donnees['nom'] . "'>Profil</a></td>\n</tr>";
             } else {
-                echo "<tr>\n\t<td>" . $donnees['prenom'] . "</td>\n<td>" . $donnees['nom'] . "</td>\n<td>" . $donnees['email'] . "</td>\n<td>" . $donnees['ville'] . "</td>\n<td>" . $benefmois . "&euro;</td>\n<td>" . $benefsem . "&euro;</td>\n<td>"
+                echo "<tr>\n\t<td>" . $donnees['prenom'] . "</td>\n<td>" . $donnees['nom'] . "</td>\n<td>" . $donnees['email'] . "</td>\n<td>" . $donnees['ville'] . "</td>\n<td>" . $benefmois . "</td>\n<td>" . $benefsem . "</td>\n<td>"
                 . "<form method='POST' action='administration_traitement.php'>"
                 . "<input type='submit' class='button' value='Débloquer' name='debloquer' onclick=\"return confirm('Vous allez débloquer cette personne, êtes vous sûr ?');\"/>"
                 . "<input type='hidden' name='idblock' value='" . $donnees['id'] . "'/>"
@@ -90,13 +91,10 @@
 </div>
 <?php
 
-
-
-
 function calculBenefNounouSemaine($nounouId) {
     require './bdd/connex_bdd.php';
     //require '../classe/Week.php';
-    $benef = 0;
+    $benefSem = 0;
     $benef_Ponc = 0;
     $benef_Etr = 0;
     $benef_Reg = 0;
@@ -111,11 +109,11 @@ function calculBenefNounouSemaine($nounouId) {
     $req = $bdd->query($sql);
     while ($res = $req->fetch()) {
         //var_dump($res);
-        $reqq=$bdd->query("SELECT COUNT(*) FROM prestation_has_enfant WHERE prestation_id=".$res['id']."");
-           $ress=$reqq->fetch();
-           //var_dump($ress);
-           $nb_enf = $ress['COUNT(*)'];
-        
+        $reqq = $bdd->query("SELECT COUNT(*) FROM prestation_has_enfant WHERE prestation_id=" . $res['id'] . "");
+        $ress = $reqq->fetch();
+        //var_dump($ress);
+        $nb_enf = $ress['COUNT(*)'];
+
         if (!empty($res)) {
             $enddate = date_create_from_format("Y-m-d H:i:s", $res['fin_datetime']);
             $startdate = date_create_from_format("Y-m-d H:i:s", $res['debut_datetime']);
@@ -124,16 +122,16 @@ function calculBenefNounouSemaine($nounouId) {
 //    var_dump($enddate);
             //var_dump($diffdate);
             //$benef_Ponct= 7 *
-            $benef_Ponc = $benef_Ponc + (7+4*$nb_enf) * intval($diffdate);
+            $benef_Ponc = $benef_Ponc + (7 + 4 * $nb_enf) * intval($diffdate);
         }
     }
     $sql2 = "SELECT debut_datetime, fin_datetime, id FROM prestation WHERE nounou_id=$nounouId AND debut_datetime BETWEEN '$week_start' AND '$week_end' AND type='reguliere'";
     $req2 = $bdd->query($sql2);
     while ($res2 = $req2->fetch()) {
-           $reqq2=$bdd->query("SELECT COUNT(*) FROM prestation_has_enfant WHERE prestation_id=".$res2['id']."");
-           $ress2=$reqq2->fetch();
-           //var_dump($ress2);
-           $nb_enf = $ress2['COUNT(*)'];
+        $reqq2 = $bdd->query("SELECT COUNT(*) FROM prestation_has_enfant WHERE prestation_id=" . $res2['id'] . "");
+        $ress2 = $reqq2->fetch();
+        //var_dump($ress2);
+        $nb_enf = $ress2['COUNT(*)'];
         //var_dump($res2);
         if (!empty($res2)) {
             $enddate = date_create_from_format("Y-m-d H:i:s", $res2['fin_datetime']);
@@ -143,16 +141,16 @@ function calculBenefNounouSemaine($nounouId) {
 //    var_dump($enddate);
             //var_dump($diffdate);
             //$benef_Ponct= 7 *
-            $benef_Reg = $benef_Reg + (10+($nb_enf-1)*5) * intval($diffdate);
+            $benef_Reg = $benef_Reg + (10 + ($nb_enf - 1) * 5) * intval($diffdate);
         }
     }
     $sql3 = "SELECT debut_datetime, fin_datetime, id FROM prestation WHERE nounou_id=$nounouId AND debut_datetime BETWEEN '$week_start' AND '$week_end' AND type='etrangere'";
     $req3 = $bdd->query($sql3);
     while ($res3 = $req3->fetch()) {
-        $reqq3=$bdd->query("SELECT COUNT(*) FROM prestation_has_enfant WHERE prestation_id=".$res3['id']."");
-           $ress3=$reqq3->fetch();
-           //var_dump($ress3);
-           $nb_enf = $ress3['COUNT(*)'];
+        $reqq3 = $bdd->query("SELECT COUNT(*) FROM prestation_has_enfant WHERE prestation_id=" . $res3['id'] . "");
+        $ress3 = $reqq3->fetch();
+        //var_dump($ress3);
+        $nb_enf = $ress3['COUNT(*)'];
         //var_dump($res3);
         if (!empty($res3)) {
             $enddate = date_create_from_format("Y-m-d H:i:s", $res3['fin_datetime']);
@@ -165,14 +163,15 @@ function calculBenefNounouSemaine($nounouId) {
             $benef_Etr = $benef_Etr + 15 * $nb_enf * intval($diffdate);
         }
     }
-    $benef = $benef_Ponc + $benef_Reg + $benef_Etr;
-    return $benef;
+    $benefSem = $benef_Ponc + $benef_Reg + $benef_Etr;
+    return $benefSem;
 }
+
 //
 function calculBenefNounouMois($nounouId) {
     require './bdd/connex_bdd.php';
     //require '../classe/Month.php';
-    $benef = 0;
+    $benefMois = 0;
     $benef_Ponc = 0;
     $benef_Etr = 0;
     $benef_Reg = 0;
@@ -186,10 +185,10 @@ function calculBenefNounouMois($nounouId) {
     $sql = "SELECT debut_datetime, fin_datetime, id FROM prestation WHERE nounou_id=$nounouId AND debut_datetime BETWEEN '$month_start' AND '$month_end' AND type='ponctuelle'";
     $req = $bdd->query($sql);
     while ($res = $req->fetch()) {
-        $reqq=$bdd->query("SELECT COUNT(*) FROM prestation_has_enfant WHERE prestation_id=".$res['id']."");
-           $ress=$reqq->fetch();
-           //var_dump($ress);
-           $nb_enf = $ress['COUNT(*)'];
+        $reqq = $bdd->query("SELECT COUNT(*) FROM prestation_has_enfant WHERE prestation_id=" . $res['id'] . "");
+        $ress = $reqq->fetch();
+        //var_dump($ress);
+        $nb_enf = $ress['COUNT(*)'];
         $enddate = date_create_from_format("Y-m-d H:i:s", $res['fin_datetime']);
         $startdate = date_create_from_format("Y-m-d H:i:s", $res['debut_datetime']);
         $diffdate = date_diff($enddate, $startdate)->format('%h');
@@ -197,15 +196,15 @@ function calculBenefNounouMois($nounouId) {
         //var_dump($startdate);
         //var_dump($enddate);
         //var_dump($diffdate);
-        $benef_Ponc += (7+4*$nb_enf) * intval($diffdate);
+        $benef_Ponc += (7 + 4 * $nb_enf) * intval($diffdate);
     }
     $sql2 = "SELECT debut_datetime, fin_datetime, id FROM prestation WHERE nounou_id=$nounouId AND debut_datetime BETWEEN '$month_start' AND '$month_end' AND type='reguliere'";
     $req2 = $bdd->query($sql2);
     while ($res2 = $req2->fetch()) {
-        $reqq2=$bdd->query("SELECT COUNT(*) FROM prestation_has_enfant WHERE prestation_id=".$res2['id']."");
-           $ress2=$reqq2->fetch();
-           //var_dump($ress);
-           $nb_enf = $ress2['COUNT(*)'];
+        $reqq2 = $bdd->query("SELECT COUNT(*) FROM prestation_has_enfant WHERE prestation_id=" . $res2['id'] . "");
+        $ress2 = $reqq2->fetch();
+        //var_dump($ress);
+        $nb_enf = $ress2['COUNT(*)'];
         $enddate = date_create_from_format("Y-m-d H:i:s", $res2['fin_datetime']);
         $startdate = date_create_from_format("Y-m-d H:i:s", $res2['debut_datetime']);
         $diffdate = date_diff($enddate, $startdate)->format('%h');
@@ -213,15 +212,15 @@ function calculBenefNounouMois($nounouId) {
         //var_dump($startdate);
         //var_dump($enddate);
         //var_dump($diffdate);
-        $benef_Reg += (7+5*$nb_enf) * intval($diffdate);
+        $benef_Reg += (7 + 5 * $nb_enf) * intval($diffdate);
     }
     $sql3 = "SELECT debut_datetime, fin_datetime, id FROM prestation WHERE nounou_id=$nounouId AND debut_datetime BETWEEN '$month_start' AND '$month_end' AND type='etrangere'";
     $req3 = $bdd->query($sql);
     while ($res3 = $req3->fetch()) {
-        $reqq3=$bdd->query("SELECT COUNT(*) FROM prestation_has_enfant WHERE prestation_id=".$res3['id']."");
-           $ress3=$reqq3->fetch();
-           //var_dump($ress);
-           $nb_enf = $ress3['COUNT(*)'];
+        $reqq3 = $bdd->query("SELECT COUNT(*) FROM prestation_has_enfant WHERE prestation_id=" . $res3['id'] . "");
+        $ress3 = $reqq3->fetch();
+        //var_dump($ress);
+        $nb_enf = $ress3['COUNT(*)'];
         $enddate = date_create_from_format("Y-m-d H:i:s", $res3['fin_datetime']);
         $startdate = date_create_from_format("Y-m-d H:i:s", $res3['debut_datetime']);
         $diffdate = date_diff($enddate, $startdate)->format('%h');
@@ -229,11 +228,12 @@ function calculBenefNounouMois($nounouId) {
         //var_dump($startdate);
         //var_dump($enddate);
         //var_dump($diffdate);
-        $benef_Ponc += (15*$nb_enf) * intval($diffdate);
+        $benef_Ponc += (15 * $nb_enf) * intval($diffdate);
     }
-    $benef = $benef_Ponc + $benef_Reg + $benef_Etr;
-    return $benef;
+    $benefMois = $benef_Ponc + $benef_Reg + $benef_Etr;
+    return $benefMois;
 }
+
 //
 function calculBenefTotal() {
     require './bdd/connex_bdd.php';
@@ -245,7 +245,9 @@ function calculBenefTotal() {
     }
     return $benef;
 }
-//?>
+
+//
+?>
 <script>
     $("#btn_utilisateur").on('click', function () {
         $('#table_nounou').fadeOut().delay(1500);
@@ -266,37 +268,40 @@ function calculBenefTotal() {
 
 <script>
     var table = $('#tablenounou');
-
     $('#nomnounou, #benefmois, #benefsem')
             .wrapInner('<span title="sort this column"/>')
             .each(function () {
 
-                var th = $(this),
-                        thIndex = th.index(),
-                        inverse = false;
+                var th = $(this);
+                th.css("cursor", "pointer");
+                th.append('<i class="ui-icon ui-icon-caret-2-n-s"></i>');
+                thIndex = th.index();
+                inverse = false;
 
                 th.click(function () {
 
                     table.find('td').filter(function () {
-
                         return $(this).index() === thIndex;
 
-                    }).sortElements(function (a, b) {
+                    }).sortElements(function (a, b)
+                    {
+                        if ($.isNumeric($.text([a])))
+                        {
+                            x = $.text([a]);
+                              
+                            y = $.text([b]);
+                            return (eval(x) > eval(y)) ? inverse ? -1 : 1 : inverse ? 1 : -1;
+                        } else
+                        {
+                            return $.text([a]) > $.text([b]) ? inverse ? -1 : 1 : inverse ? 1 : -1;
+                            
+                        }
 
-                        return $.text([a]) > $.text([b]) ?
-                                inverse ? -1 : 1
-                                : inverse ? 1 : -1;
-
-                    }, function () {
-
-                        // parentNode is the element we want to move
+                    }, function ()
+                    {
                         return this.parentNode;
-
                     });
-
                     inverse = !inverse;
-
                 });
-
             });
 </script>

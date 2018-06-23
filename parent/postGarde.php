@@ -9,13 +9,13 @@ session_start();
 if ($_SESSION['User_Type'] !== 'parent') {
     header('Location:../error403.html');
 }
-var_dump($_SESSION['id']);
+//var_dump($_SESSION['id']);
 require('../bdd/connex_bdd.php');
 require('./functionform.php');
 $date = new DateTime('now');
 $dateToday = $date->format("Y-m-d H:i");
 $note = [0, 1, 2, 3, 4, 5];
-var_dump($dateToday);
+//var_dump($dateToday);
 ?>
 <html>
     <head>
@@ -23,7 +23,14 @@ var_dump($dateToday);
         <title></title>
     </head>
     <body>
-        Vos gardes précédentes
+        <?php require './menu_parent.php'; ?>
+        <h2>Vos gardes précédentes</h2>
+        <p>
+            Vous pouvez voir la liste des différentes gardes qui ont déjà été effectuées.
+            Vous pouvez aussi laisser un avis sur ces gardes en les notant et en laissant
+            un commentaire pour la nounou. Ces commentaires seront visibles sur les profils
+            des nounous concernées.
+        </p>
         <br/>
         <br/>
         <table>
@@ -37,10 +44,10 @@ var_dump($dateToday);
             $res = $req->fetchAll();
             //var_dump($res);
             foreach ($res as $k => $resultat):
-                var_dump($resultat);
+                //var_dump($resultat);
                 $requete = $bdd->query("SELECT Note FROM evaluation WHERE nounou_id=" . $resultat['nounou_id'] . " AND parent_id=" . $_SESSION['id'] . " AND prestation_id=" . $resultat['id'] . "");
                 $result = $requete->fetch();
-                var_dump($result);
+                //var_dump($result);
                 ?>
                 <tr>
                     <td><?= $resultat['debut_datetime'] ?></td>

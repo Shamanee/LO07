@@ -7,7 +7,7 @@ if ($_SESSION['User_Type'] !== 'parent') {
 }
 //var_dump($_SESSION);
 $jours = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
-$k=-1;
+$k = -1;
 ?>
 <html>
     <head>
@@ -15,6 +15,7 @@ $k=-1;
         <title></title>
     </head>
     <body>
+        <?php require './menu_parent.php'; ?>
         <h2>Que recherchez-vous?</h2>
         <form method="POST" action="demandeGardeEtrangere.php">
 
@@ -88,7 +89,7 @@ $k=-1;
                             //var_dump($res['nom']);
                             ?>
 
-                            <input type="radio" name='nounou' id='<?= $nom_nounou ?>' value="<?= $nom_nounou ?>"/><label><a href="../profil-nounou.php?nom=<?=$nom_nounou?>"><?= $nom_nounou ?></a></label>
+                            <input type="radio" name='nounou' id='<?= $nom_nounou ?>' value="<?= $nom_nounou ?>"/><label><a href="../profil-nounou.php?nom=<?= $nom_nounou ?>"><?= $nom_nounou ?></a></label>
                             <input type="hidden" name="heure_debut" value="<?= $_POST["debut"] ?>"/>
                             <input type="hidden" name="heure_fin" value="<?= $_POST["fin"] ?>"/>
                             <input type="hidden" name='date' value="<?= $_POST['date'] ?>"/>

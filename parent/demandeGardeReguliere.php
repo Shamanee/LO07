@@ -22,6 +22,7 @@ $jours = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche
         <title></title>
     </head>
     <body>
+        <?php require './menu_parent.php'; ?>
         <form method="POST" action="demandeGardeReguliere.php">
             <?php
             foreach ($jours as $jour):
