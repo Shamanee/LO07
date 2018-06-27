@@ -2,7 +2,7 @@
 session_start();
 //require '../bdd/connex_bdd.php';
 if ($_SESSION['User_Type'] !== 'parent') {
-    header('Location:error403.html');
+    header('Location:../error403.html');
 }
 //var_dump($_SESSION);
 //$jours = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
@@ -11,11 +11,18 @@ if ($_SESSION['User_Type'] !== 'parent') {
     <head>
         <meta charset="UTF-8">
         <title></title>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
         <style>
             .dispo_jour{
             }
         </style>
+        <meta author="Timothée Drouot, Thomas Conroux">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        <link rel="stylesheet" href="../css/style.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
     </head>
     <body>
         <?php

@@ -70,6 +70,11 @@ if (isset($langueId)) {
             ?>
         </ul>
     </li>
+    <?php
+    $rreq = $bdd->query("SELECT type FROM prestation WHERE id=$eventId");
+    $rres = $rreq->fetch();
+    ?>
+    <li>Type : <?=$rres['type'];?></li>
 </ul>
 
 <?php require './views/footer.php'; ?>

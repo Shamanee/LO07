@@ -64,7 +64,7 @@ and open the template in the editor.
                                     </div>
                                     <div style="margin-top:10px" class="form-group">
                                         <div class="col-sm-12 controls">
-                                            <input type="submit" value="Inscription"/>
+                                            <input id="btn-login" class="btn" type="submit" value="Inscription"/>
                                         </div>
                                     </div>
                                     <div class="form-group">

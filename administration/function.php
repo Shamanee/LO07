@@ -104,7 +104,7 @@ function calculBenefNounouMois($nounouId) {
         //var_dump($startdate);
         //var_dump($enddate);
         //var_dump($diffdate);
-        $benef_Ponc += (7+4*$nb_enf) * intval($diffdate);
+        $benef_Ponc=$benef_Ponc + (7+4*$nb_enf) * intval($diffdate);
     }
     $sql2 = "SELECT debut_datetime, fin_datetime, id FROM prestation WHERE nounou_id=$nounouId AND debut_datetime BETWEEN '$month_start' AND '$month_end' AND type='reguliere'";
     $req2 = $bdd->query($sql2);
@@ -118,13 +118,14 @@ function calculBenefNounouMois($nounouId) {
         $diffdate = date_diff($enddate, $startdate)->format('%h');
         //var_dump($res);
         //var_dump($startdate);
-        //var_dump($enddate);
+        //var_dump($nb_enf);
         //var_dump($diffdate);
-        $benef_Reg += (7+5*$nb_enf) * intval($diffdate);
+        $benef_Reg = $benef_Reg + (10+($nb_enf-1)*5) * intval($diffdate);
     }
     $sql3 = "SELECT debut_datetime, fin_datetime, id FROM prestation WHERE nounou_id=$nounouId AND debut_datetime BETWEEN '$month_start' AND '$month_end' AND type='etrangere'";
-    $req3 = $bdd->query($sql);
+    $req3 = $bdd->query($sql3);
     while ($res3 = $req3->fetch()) {
+        //var_dump($res3['id']);
         $reqq3=$bdd->query("SELECT COUNT(*) FROM prestation_has_enfant WHERE prestation_id=".$res3['id']."");
            $ress3=$reqq3->fetch();
            //var_dump($ress);
@@ -136,9 +137,13 @@ function calculBenefNounouMois($nounouId) {
         //var_dump($startdate);
         //var_dump($enddate);
         //var_dump($diffdate);
-        $benef_Ponc += (15*$nb_enf) * intval($diffdate);
+        //var_dump($nb_enf);
+        $benef_Etr = $benef_Etr + 15 * $nb_enf * intval($diffdate);
     }
     $benef = $benef_Ponc + $benef_Reg + $benef_Etr;
+    echo ($benef_Ponc . '<br/>');
+    echo ($benef_Reg . "<br/>");
+    echo ($benef_Etr . '<br/>');
     return $benef;
 }
 

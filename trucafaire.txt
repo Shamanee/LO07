@@ -24,7 +24,6 @@ Mettre des menus ou boutons retours pour aller d'une page à l'autre
 
 
 
-Corriger toutes les boucles/conditions dont les balises sont fermée (mettre des endfor;/endif; ...)
 ***********************************************
 ********* C'ETAIT LES TRUCS A FAIRE ***********
 ***********************************************
@@ -51,3 +50,5 @@ Liste de ce qui a été fait :
 	->Afficher le bénéfice hebdo et mensuel
 -Parent
 	->Ajouter des enfants
+
+

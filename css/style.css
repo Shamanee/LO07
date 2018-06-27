@@ -3,14 +3,17 @@
     Author     : Timothée
 */
 body, html {
-    font: 16px "Montserrat", sans-serif;
-    line-height: 1.2;
+    font: 15px "Montserrat", sans-serif;
     color: #000;
     height: 100%;
 }
 
 .container-fluid {
     padding: 0px;
+}
+
+.navbar{
+    margin-bottom: 0px;
 }
 
 .bg-1{
@@ -49,4 +52,11 @@ footer{
     color: #FFF;
     background: #000;
     width: 100%;
+}
+
+#accueil{
+    margin:5px; 
+    border-radius: 15px;
+    height: 250px;
+    text-align: center;
 }

@@ -42,10 +42,11 @@ require'./views/header.php';
 //dd($events);
 ?>
 
-<h1><?= $week->toString(); ?></h1>
 <div class="menu">
     <?php require './menu_test.php'; ?>
 </div>
+<h1><?= $week->toString(); ?></h1>
+
 <div>
     <a href="semaine.php?week=<?= $week->previousWeek()->week; ?>&year=<?= $week->previousWeek()->year; ?>" class="btn btn-primary">&lt;</a>
     <a href="semaine.php?week=<?= $week->nextWeek()->week; ?>&year=<?= $week->nextWeek()->year; ?>"class="btn btn-primary">&gt;</a>

@@ -56,10 +56,11 @@ require'./views/header.php';
 //dd($events);
 ?>
 <div class="d-flex flex-row align-items-center justify-content-between mx-sm-2">
-    <h1><?= $month->toString(); ?></h1>
     <div class="menu">
         <?php require './menu_test.php'; ?>
     </div>
+    <h1><?= $month->toString(); ?></h1>
+    
     <div>
         <a href="planning_test2.php?month=<?= $month->previousMonth()->month; ?>&year=<?= $month->previousMonth()->year; ?>" class="btn btn-primary">&lt;</a>
         <a href="planning_test2.php?month=<?= $month->nextMonth()->month; ?>&year=<?= $month->nextMonth()->year; ?>"class="btn btn-primary">&gt;</a>
