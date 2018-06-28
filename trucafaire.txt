@@ -3,52 +3,12 @@
 *************    IMPORTANT    *****************
 ***********************************************
 
-Peut etre séparer les 2 formulaires
-
-/!\FAIRE LA PARTIE FRONT DU SITE/!\
 
 BASE DE DONNEES :
 Evaluation : Ajouter la date
 Revoir toutes les tables pour vérifier
 
-NOUNOU :
-	
-
-PARENT :
-
-
-ADMINISTRATION :
-
-
-Mettre des menus ou boutons retours pour aller d'une page à l'autre
-
-
 
 ***********************************************
 ********* C'ETAIT LES TRUCS A FAIRE ***********
 ***********************************************
-
-Liste de ce qui a été fait :
--Inscription/Connexion/Deconnexion
--Accueil/Menu
--Profil
-	->Photo
-	->Modification de profil
--Administration
-	->Voir les inscrits sur le site
-	->Recrutement des nounous
-	->Afficher le nombre de nounous
-	->Pour bloquer/débloquer des nounous
-	->Afficher les bénéfices des nounous
-	->Accès au profil des nounous
-	->Trier les nounous par revenu (et par nom)
--Nounou
-	->Disponibilités
-	->Langues parlées
-	->Experience/Infos (dans le profil)
-	->Début de planning (non-fonctionnel)
-	->Afficher le bénéfice hebdo et mensuel
--Parent
-	->Ajouter des enfants
-
-

@@ -19,6 +19,6 @@ for ($i = 0; $i < $nb_langue; $i++) {
     }
 }
 echo 'Vos langues ont été enregistrés, vous allez être redirigé';
-header('Refresh:2; url=accueil.php');
+header('Location:accueil.php');
 
 ?>

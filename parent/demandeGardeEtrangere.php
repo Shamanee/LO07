@@ -24,113 +24,133 @@ $k = -1;
     </head>
     <body>
         <?php require './menu_parent.php'; ?>
-        <h2>Que recherchez-vous?</h2>
-        <form method="POST" action="demandeGardeEtrangere.php">
+        <div class="container">
+            <div class="row">
+                <h2>Que recherchez-vous?</h2>
+                <form method="POST" action="demandeGardeEtrangere.php" class="form-horizontal">
 
-            <label>Choisissez vos enfants à garder</label>
-            <?php
-            $req = $bdd->query("SELECT Prenom FROM enfant WHERE utilisateur_id=" . $_SESSION['id'] . "");
-            $res = $req->fetchAll(PDO::FETCH_COLUMN);
-            checkbox('enfant[]', $res);
-            ?><br>  
+                    <label>Choisissez vos enfants à garder</label>
+                    <?php
+                    $req = $bdd->query("SELECT Prenom FROM enfant WHERE utilisateur_id=" . $_SESSION['id'] . "");
+                    $res = $req->fetchAll(PDO::FETCH_COLUMN);
+                    checkbox('enfant[]', $res);
+                    ?><br>  
 
-            <label> choisissez votre date </label>
-            <input type="date" name="date" requiered/>  <br>
-
-
-
-            <label>choisissez l'horaire de début</label><br/>
-            <input type='time' name='debut' requiered> <br>
-            <label>choisissez l'horaire de fin</label><br/>
-            <input type='time' name='fin' requiered> <br>
+                    <label> choisissez votre date </label>
+                    <input type="date" name="date" class="form-control" requiered/>  <br>
 
 
+                    <div class="col-md-6">
+                        <label>choisissez l'horaire de début</label><br/>
+                        <input type='time' name='debut' class="form-control" requiered> <br>
+                    </div>
+                    <div class="col-md-6">
+                        <label>choisissez l'horaire de fin</label><br/>
+                        <input type='time' name='fin' class="form-control" requiered> <br>
+                    </div>
 
-            <?php
-            $r = $bdd->query("SELECT langue FROM langue");
-            echo '<label> Sélectionnez la langue pour la garde : ';
-            $result = $r->fetchAll(PDO::FETCH_COLUMN);
-            select('langue', $result);
-            ?>
-            <br/><input type="submit" name='submit' value="Recherche une nounou"/><br/>
-        </form>
-        <?php
-        //var_dump($_POST);
-        if (isset($_POST['submit'])) {
-            //var_dump($_POST);
-            echo '<form method = "POST" action="gardeEtrangere_traitement.php">';
-            //var_dump($result);
-            $array_nounou = [];
-            $date = $_POST['date'];
-            $date_prest = date_create($date);
-            //var_dump($date_prest);
-            $j = $date_prest->format('w');
-            if ($j !== 0) {
-                $jour = $j - 1;
-            } else {
-                $jour = 6;
-            }
-            $langue = $_POST['langue'];
-            echo "<br/>Pour le $date, nous vous proposon cette (ces) nounou(s) :<br/>\n";
-            $h_deb = $_POST["debut"];
-            $h_fin = $_POST["fin"];
-            $heure_debut = date_create_from_format('H:i', $h_deb);
-            $heure_fin = date_create_from_format('H:i', $h_fin);
-            if ($heure_debut != FALSE && $heure_fin != FALSE) {
-                $heure_debut = $heure_debut->format('H:i:s');
-                $heure_fin = $heure_fin->format('H:i:s');
+                    <div class="text-center">
+                        <?php
+                        $r = $bdd->query("SELECT langue FROM langue");
+                        echo '<label> Sélectionnez la langue pour la garde : ';
+                        $result = $r->fetchAll(PDO::FETCH_COLUMN);
+                        select('langue', $result);
+                        ?>
+                    </div>
+                    <div class="text-center">
+                        <br/><input type="submit" name='submit' class="btn btn-primary" value="Recherche une nounou"/><br/>
+                    </div>
+                </form>
+                <?php
+                //var_dump($_POST);
+                if (isset($_POST['submit'])) {
+                    echo '<hr/>';
+                    //var_dump($_POST);
+                    echo '<form method = "POST" action="gardeEtrangere_traitement.php">';
+                    //var_dump($result);
+                    $array_nounou = [];
+                    $date = $_POST['date'];
+                    $date_prest = date_create($date);
+                    //var_dump($date_prest);
+                    $j = $date_prest->format('w');
+                    if ($j !== 0) {
+                        $jour = $j - 1;
+                    } else {
+                        $jour = 6;
+                    }
+                    $langue = $_POST['langue'];
+                    echo "<br/>Pour le $date, nous vous proposon cette (ces) nounou(s) :<br/>\n";
+                    $h_deb = $_POST["debut"];
+                    $h_fin = $_POST["fin"];
+                    $heure_debut = date_create_from_format('H:i', $h_deb);
+                    $heure_fin = date_create_from_format('H:i', $h_fin);
+                    if ($heure_debut != FALSE && $heure_fin != FALSE) {
+                        $heure_debut = $heure_debut->format('H:i:s');
+                        $heure_fin = $heure_fin->format('H:i:s');
 
 //                        var_dump($h_deb);
 //                        var_dump($h_fin);
 //                        var_dump($heure_debut);
 //                        var_dump($heure_fin);
-                $r = $bdd->query("SELECT D.utilisateur_id, D.jour, D.Debut, D.Fin, U.nom, L.Langue FROM disponibilite D, utilisateur U, langue L, utilisateur_has_langue Z WHERE D.jour=$jour AND D.utilisateur_id = U.id AND U.User_Type='nounou' AND U.id=Z.utilisateur_id AND L.Langue='$langue' AND L.id=Z.langue_id");
-                $result = $r->fetchAll(PDO::FETCH_ASSOC);
-                //var_dump($result);
-                if (!empty($result)) {
-                    foreach ($result as $res) {
-                        //var_dump($res);
+                        $r = $bdd->query("SELECT D.utilisateur_id, D.jour, D.Debut, D.Fin, U.nom, L.Langue FROM disponibilite D, utilisateur U, langue L, utilisateur_has_langue Z WHERE D.jour=$jour AND D.utilisateur_id = U.id AND U.User_Type='nounou' AND U.id=Z.utilisateur_id AND L.Langue='$langue' AND L.id=Z.langue_id");
+                        $result = $r->fetchAll(PDO::FETCH_ASSOC);
+                        //var_dump($result);
+                        if (!empty($result)) {
+                            foreach ($result as $res) {
+                                //var_dump($res);
 
-                        if ($heure_debut >= $res['Debut'] && $heure_fin <= $res['Fin']) {
-                            //$array_nounou[] = $res['nom'];
-                            $nom_nounou = $res['nom'];
-                            //var_dump($res['nom']);
-                            ?>
-
-                            <input type="radio" name='nounou' id='<?= $nom_nounou ?>' value="<?= $nom_nounou ?>"/><label><a href="../profil-nounou.php?nom=<?= $nom_nounou ?>"><?= $nom_nounou ?></a></label>
-                            <input type="hidden" name="heure_debut" value="<?= $_POST["debut"] ?>"/>
-                            <input type="hidden" name="heure_fin" value="<?= $_POST["fin"] ?>"/>
-                            <input type="hidden" name='date' value="<?= $_POST['date'] ?>"/>
-                            <input type="hidden" name='langue' value="<?= $_POST['langue'] ?>"/>
-                            <?php
-                            foreach ($_POST['enfant'] as $k => $enfant):
-                                ?>
-                                <input type="hidden" name="enfant[]" value="<?= $enfant ?>"/>
-                                <?php
-                            endforeach;
+                                if ($heure_debut >= $res['Debut'] && $heure_fin <= $res['Fin']) {
+                                    //$array_nounou[] = $res['nom'];
+                                    $nom_nounou = $res['nom'];
+                                    //var_dump($res['nom']);
+                                    ?>
+                                    <div class="radio">
+                                        <input type="radio" name='nounou' id='<?= $nom_nounou ?>' value="<?= $nom_nounou ?>"/><label><a href="../profil-nounou.php?nom=<?= $nom_nounou ?>"><?= $nom_nounou ?></a></label>
+                                    </div>
+                                    <input type="hidden" name="heure_debut" value="<?= $_POST["debut"] ?>"/>
+                                    <input type="hidden" name="heure_fin" value="<?= $_POST["fin"] ?>"/>
+                                    <input type="hidden" name='date' value="<?= $_POST['date'] ?>"/>
+                                    <input type="hidden" name='langue' value="<?= $_POST['langue'] ?>"/>
+                                    <?php
+                                    foreach ($_POST['enfant'] as $k => $enfant):
+                                        ?>
+                                        <input type="hidden" name="enfant[]" value="<?= $enfant ?>"/>
+                                        <?php
+                                    endforeach;
+                                }
+                            }
+                        } else {
+                            echo 'Aucun résultat';
                         }
                     }
-                } else {
-                    echo 'Aucun résultat';
-                }
-            }
-            ?>
-            <br/>
-            <br/>
-            <input type="submit" name="submit" value='Choisir la nounou'/>
-        </form>
-        <?php
-        if ($k >= 0) {
-            echo "<br/>";
-            echo $k + 1 . " enfants<br/>";
+                    ?>
+                    <br/>
+                    <br/>
+                    <div class="text-center">
+                        <input type="submit" name="submit" class="btn btn-primary" value='Choisir la nounou'/>
+                    </div>
+                    </form>
+                    <div class="col-lg-4"></div>
+                    <div class="col-lg-4">
+                        <div class="infomodif text-center">
+                            <?php
+                            if ($k >= 0) {
+                                echo "<br/>";
+                                echo $k + 1 . " enfants<br/>";
 
-            echo "prix à payer : ";
-            require './function_prix.php';
-            calculPrix_etrangere($_POST["debut"], $_POST["fin"], $k + 1);
-            echo " &euro;";
-        }
-    }
-    ?>
-</body>
+                                echo "prix à payer : ";
+                                require './function_prix.php';
+                                calculPrix_etrangere($_POST["debut"], $_POST["fin"], $k + 1);
+                                echo " &euro;";
+                            }
+                        }
+                        ?>
+                    </div>
+                </div>
+                <div class="col-lg-4"></div>         
+            </div>
+        </div>
+        <?php require '../footer.html';?>
+    </body>
 </html>
 

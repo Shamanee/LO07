@@ -141,9 +141,6 @@ function calculBenefNounouMois($nounouId) {
         $benef_Etr = $benef_Etr + 15 * $nb_enf * intval($diffdate);
     }
     $benef = $benef_Ponc + $benef_Reg + $benef_Etr;
-    echo ($benef_Ponc . '<br/>');
-    echo ($benef_Reg . "<br/>");
-    echo ($benef_Etr . '<br/>');
     return $benef;
 }
 

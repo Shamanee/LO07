@@ -32,6 +32,8 @@ $note = [0, 1, 2, 3, 4, 5];
     </head>
     <body>
         <?php require './menu_parent.php'; ?>
+        <div class="container">
+            <div class="row">
         <h2>Vos gardes précédentes</h2>
         <p>
             Vous pouvez voir la liste des différentes gardes qui ont déjà été effectuées.
@@ -41,7 +43,7 @@ $note = [0, 1, 2, 3, 4, 5];
         </p>
         <br/>
         <br/>
-        <table>
+        <table class="table">
             <tr>
                 <th>Date</th>
                 <th>Nom Nounou</th>
@@ -64,10 +66,13 @@ $note = [0, 1, 2, 3, 4, 5];
                         <td>
                             <form method="POST" action="evaluation_traitement.php">
                                 <?php radio("note_$k", $note); ?><br/>
-                                <textarea name="commentaire_<?= $k ?>" cols="35" rows="4"></textarea><br/>
+                                <div class="form-group">
+                                    <label for="comment_<?=$k?>">Commentaire :</label>
+                                    <textarea name="commentaire_<?= $k ?>" class="form-control" cols="35" rows="4" id="comment_<?=$k?>"></textarea><br/>
+                                </div>
                                 <input type="hidden" name="prestation_id_<?=$k?>" value="<?=$resultat['id']?>"/>
                                 <input type="hidden" name="nounou_id_<?=$k?>" value="<?=$resultat['nounou_id']?>"/>
-                                <input type="submit" name='submit_<?= $k ?>' value="Noter"/>
+                                <input type="submit" name='submit_<?= $k ?>' class="btn btn-primary" value="Noter"/>
                             </form>
                         </td>
                         <?php
@@ -101,5 +106,8 @@ $note = [0, 1, 2, 3, 4, 5];
             <?php endforeach; ?>
 
         </table>
+            </div>
+        </div>
+        <?php require '../footer.html';?>
     </body>
 </html>

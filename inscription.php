@@ -18,10 +18,14 @@ and open the template in the editor.
         <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
     </head>
     <body>
-        <nav class="navbar navbar-light bg-lights" style="background-color: #ffd1dd; margin-bottom: 0px;">
+        <nav class="navbar navbar-light bg-lights" style="margin-bottom: 0px;">
             <a class="navbar-brand" href="accueil.php">
                 Super-Nounou
             </a>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="inscription.php"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                <li><a href="connexion.php"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+            </ul>
         </nav>
         <div class="bg-1">
             <div class="container">
@@ -103,5 +107,6 @@ and open the template in the editor.
                 <input type="password" name="password" required/><br/>
                 <input type="submit" value="Inscription"/>
             </form>-->
+            <?php require 'footer.html'; ?>
     </body>
 </html>

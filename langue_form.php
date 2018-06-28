@@ -25,10 +25,12 @@ if ($_SESSION['User_Type'] !== 'nounou') {
         <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
     </head>
     <body>
+        <?php require 'menu.php';?>
         <h2>Vos langues</h2>
         <form method="POST" action="langue_form_traitement.php">
-            <label>Langues</label><br/>
-            <select name="langue[]" size="5" multiple>
+            <div class="form-group">
+            <label for="sel">Langues</label><br/>
+            <select name="langue[]" class="form-control" size="5" id="sel" multiple>
                 <?php
                 $req = $bdd->query('SELECT * FROM langue');
                 while ($donnees = $req->fetch()) {
@@ -36,7 +38,11 @@ if ($_SESSION['User_Type'] !== 'nounou') {
                 }
                 ?>
             </select><br/>
-            <input type="submit" value="envoyer"/>
+            </div>
+            <div class="text-center" style="margin-bottom: 10px">
+            <input type="submit" class="btn btn-primary" value="envoyer"/>
+            </div>
         </form>
+        <?php require './footer.html';?>
     </body>
 </html>

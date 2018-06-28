@@ -25,42 +25,56 @@ session_start();
         /**
          * Si l'utilisateur n'est pas un parent, on lui affiche qu'il n'a pas les droits d'accéder à la page avec un Erreur403
          */
-        if($_SESSION['User_Type']!='parent'){
+        if ($_SESSION['User_Type'] != 'parent') {
             header('location: error403.html');
         }
         ?>
         <?php
         include './menu.php';
         ?>
-        <h2>Liste Enfants</h2>
-        <table>
-            <tr>
-                <th>Prenom</th>
-                <th>Date Naissance</th>
-            </tr>
-            <?php
-            /**
-             * On fait une requete à la base de données pour récupérer les enfants de l'utilisateur
-             * Les enfants seront ensuite affichés dans un tableau
-             */
-            require './bdd/connex_bdd.php';
-            $requete=$bdd->prepare('SELECT Prenom, Date_Naissance FROM enfant WHERE utilisateur_id = ?');
-            $requete->execute(array($_SESSION['id']));
-            while($donnees=$requete->fetch()){
-                echo "<tr>\n\t<td>".$donnees['Prenom']."</td>\n<td>".$donnees['Date_Naissance']."</td>\n";
-            }
-            $requete->closeCursor();
-            ?>
-        </table>
-        <br/><br/>
-        <h2>Ajouter un enfant</h2>
-        <form method="post" action="enfant_traitement.php">
-            <label>Prenom</label>
-            <input type="text" name="prenom"/><br/>
-            <label>Date de Naissance</label>
-            <input type="date" name="date_naissance"/><br/>
-            <input type="submit" value="Ajouter"/>
-        </form>
-        <a href="accueil.php">Accueil</a>
+        <div class="container">
+            <div class="row">
+                <h2>Liste Enfants</h2>
+                <table class="table table-bordered table-striped">
+                    <tr>
+                        <th>Prenom</th>
+                        <th>Date Naissance</th>
+                    </tr>
+                    <?php
+                    /**
+                     * On fait une requete à la base de données pour récupérer les enfants de l'utilisateur
+                     * Les enfants seront ensuite affichés dans un tableau
+                     */
+                    require './bdd/connex_bdd.php';
+                    $requete = $bdd->prepare('SELECT Prenom, Date_Naissance FROM enfant WHERE utilisateur_id = ?');
+                    $requete->execute(array($_SESSION['id']));
+                    while ($donnees = $requete->fetch()) {
+                        echo "<tr>\n\t<td>" . $donnees['Prenom'] . "</td>\n<td>" . $donnees['Date_Naissance'] . "</td>\n";
+                    }
+                    $requete->closeCursor();
+                    ?>
+                </table>
+                <br/><br/>
+                <h2>Ajouter un enfant</h2>
+                <form method="post" action="enfant_traitement.php">
+                    <div class="col-md-6">
+                        <div style="margin-bottom: 25px" class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                            <input type="text" name="prenom" placeholder="Prénom" class="form-control"/><br/>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div style="margin-bottom: 25px" class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                            <input type="date" name="date_naissance" class="form-control"/><br/>
+                        </div>
+                    </div>
+                    <div class="text-center" style="margin-bottom: 10px ">
+                    <input type="submit" class="btn btn-primary" value="Ajouter"/>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <?php require 'footer.html'; ?>
     </body>
 </html>

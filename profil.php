@@ -85,6 +85,7 @@ require './bdd/connex_bdd.php';
             <div class="container-fluid">
                 <div class="col-md-12">
                     <div class="col-md-6 benef">
+                        <div class="">
                         <?php
                         if ($_SESSION['User_Type'] === 'nounou') {
                             $jours = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
@@ -96,6 +97,7 @@ require './bdd/connex_bdd.php';
                             <h2>Vos bénéfices</h2>
                             <h3>Mensuel : </h3><?= calculBenefNounouMois($_SESSION['id']) ?>&euro;<br/>
                             <h3>Hebdomadaire :</h3><?= calculBenefNounouSemaine($_SESSION['id']) ?>&euro;<br/>
+                        </div>
                         </div>
                         <?php
                         if ($res[0] !== '0') {
@@ -149,5 +151,6 @@ require './bdd/connex_bdd.php';
             </div>
         </div>
     </section>
+        <?php require './footer.html';?>
 </body>
 </html>

@@ -4,90 +4,108 @@
 //require '../bdd/connex_bdd.php';
 //require './administration/function.php';
 ?>
-<button id='btn_utilisateur'>Utilisateurs</button>
-<button id='btn_nounou'>Nounous</button>
-<button id='btn_chiffre'>Chiffres</button>
-<div id='table_utilisateur' style='display: none'>
-    <?php
-    $req = $bdd->query("SELECT COUNT(*) FROM utilisateur WHERE User_Type <> 'admin'");
-    $res = $req->fetch();
-    $nbUtilisateur = $res['COUNT(*)'];
-    ?>
-    <h2>Liste Utilisateurs (<?= $nbUtilisateur ?> utilisateurs)</h2>
-    <table>
-        <tr>
-            <th>Type</th>
-            <th>Prenom</th>
-            <th>Nom</th>
-            <th>Email</th>
-            <th>Ville</th>
-        </tr>
-        <?php
-        /**
-         * On effectue une requete pour avoir tous les utilisateur du site, et on les affiche dans un tableau (en excluant l'administrateur du site)
-         */
-        $requete = $bdd->query('SELECT User_Type, prenom,nom,email,ville FROM utilisateur');
-        while ($donnees = $requete->fetch()) {
-            if ($donnees['User_Type'] != 'admin') {
-                echo "<tr>\n\t<td>" . $donnees['User_Type'] . "</td>\n<td>" . $donnees['prenom'] . "</td>\n<td>" . $donnees['nom'] . "</td>\n<td>" . $donnees['email'] . "</td>\n<td>" . $donnees['ville'] . "</td>\n</tr>";
-            }
-        }
-        $requete->closeCursor();
-        ?>
-    </table>
-</div>
-<div id="table_nounou" style='display: none'>
-    <?php
-    $req1 = $bdd->query("SELECT COUNT(*) FROM utilisateur WHERE User_Type = 'nounou'");
-    $res1 = $req1->fetch();
-    $nbNounou = $res1['COUNT(*)'];
-    ?>
-    <h2>Liste Nounous (<?= $nbNounou ?> nounous)</h2>
-    <table id="tablenounou">
-        <tr>
-            <th>Prenom</th>
-            <th id='nomnounou'>Nom</th>
-            <th>Email</th>
-            <th>Ville</th>
-            <th id='benefmois'>Bénéfice Mensuel (&euro;)</th>
-            <th id="benefsem">Bénéfice Hebdomadaire(&euro;)</th>
-            <th>Bloquer</th>
-            <th>Profil</th>
-        </tr>
-        <?php
-        /**
-         * On effectue une requete pour avoir tous les utilisateur du site, et on les affiche dans un tableau (en excluant l'administrateur du site)
-         */
-        $requete = $bdd->query("SELECT User_Type,id,prenom,nom,email,ville FROM utilisateur WHERE User_Type='nounou' OR User_Type='blocked'");
-        while ($donnees = $requete->fetch()) {
-            if ($donnees['User_Type'] === 'nounou') {
-                $benefmois = calculBenefNounouMois($donnees['id']);
-                $benefsem = calculBenefNounouSemaine($donnees['id']);
-                echo "<tr>\n\t<td>" . $donnees['prenom'] . "</td>\n<td>" . $donnees['nom'] . "</td>\n<td>" . $donnees['email'] . "</td>\n<td>" . $donnees['ville'] . "</td>\n<td>" . $benefmois . "</td>\n<td>" . $benefsem . "</td>\n<td>"
-                . "<form method='POST' action='administration_traitement.php'>"
-                . "<input type='submit' class='button' value='Bloquer' name='bloquer' onclick=\"return confirm('Vous allez bloquer cette personne, êtes vous sûr ?');\"/>"
-                . "<input type='hidden' name='idblock' value='" . $donnees['id'] . "'/>"
-                . "</form></td>\n"
-                . "<td><a href='profil-nounou.php?nom=" . $donnees['nom'] . "'>Profil</a></td>\n</tr>";
-            } else {
-                echo "<tr>\n\t<td>" . $donnees['prenom'] . "</td>\n<td>" . $donnees['nom'] . "</td>\n<td>" . $donnees['email'] . "</td>\n<td>" . $donnees['ville'] . "</td>\n<td>" . $benefmois . "</td>\n<td>" . $benefsem . "</td>\n<td>"
-                . "<form method='POST' action='administration_traitement.php'>"
-                . "<input type='submit' class='button' value='Débloquer' name='debloquer' onclick=\"return confirm('Vous allez débloquer cette personne, êtes vous sûr ?');\"/>"
-                . "<input type='hidden' name='idblock' value='" . $donnees['id'] . "'/>"
-                . "</form></td>\n</tr>";
-            }
-        }
-        $requete->closeCursor();
-        ?>
-    </table>
-</div>
-<div id='chiffre' style='display: none'>
-    <h2>Les chiffres du site</h2>
-    <ul>
-        <li><?= $nbNounou ?> Nounous au total</li>
-        <li><?= $nbUtilisateur ?> Utilisateurs</li>
-        <li><?= calculBenefTotal() ?> &euro; de CA mensuel</li>
-    </ul>
+<div class="container-fluid">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+        <ul class="nav nav-tabs">
+            <li><a id='btn_utilisateur' data-toggle="tab">Utilisateurs</a></li>
+            <li><a id='btn_nounou' data-toggle="tab">Nounous</a></li>
+            <li><a id='btn_chiffre' data-toggle="tab">Chiffres</a></li>
+        </ul>
+
+        <div id='table_utilisateur' style='display: none'>
+            <?php
+            $req = $bdd->query("SELECT COUNT(*) FROM utilisateur WHERE User_Type <> 'admin'");
+            $res = $req->fetch();
+            $nbUtilisateur = $res['COUNT(*)'];
+            ?>
+            <h2>Liste Utilisateurs (<?= $nbUtilisateur ?> utilisateurs)</h2>
+            <table class="table table-bordered table-striped">
+                <tr>
+                    <th>Type</th>
+                    <th>Prenom</th>
+                    <th>Nom</th>
+                    <th>Email</th>
+                    <th>Ville</th>
+                </tr>
+                <?php
+                /**
+                 * On effectue une requete pour avoir tous les utilisateur du site, et on les affiche dans un tableau (en excluant l'administrateur du site)
+                 */
+                $requete = $bdd->query('SELECT User_Type, prenom,nom,email,ville FROM utilisateur');
+                while ($donnees = $requete->fetch()) {
+                    if ($donnees['User_Type'] != 'admin') {
+                        echo "<tr>\n\t<td>" . $donnees['User_Type'] . "</td>\n<td>" . $donnees['prenom'] . "</td>\n<td>" . $donnees['nom'] . "</td>\n<td>" . $donnees['email'] . "</td>\n<td>" . $donnees['ville'] . "</td>\n</tr>";
+                    }
+                }
+                $requete->closeCursor();
+                ?>
+            </table>
+        </div>
+        <div id="table_nounou" style='display: none'>
+            <?php
+            $req1 = $bdd->query("SELECT COUNT(*) FROM utilisateur WHERE User_Type = 'nounou'");
+            $res1 = $req1->fetch();
+            $nbNounou = $res1['COUNT(*)'];
+            ?>
+            <h2>Liste Nounous (<?= $nbNounou ?> nounous)</h2>
+            <table id="tablenounou" class="table table-bordered table-striped">
+                <tr>
+                    <th>Prenom</th>
+                    <th id='nomnounou'>Nom<span class="glyphicon glyphicon-sort"></span></th>
+                    <th>Email</th>
+                    <th>Ville</th>
+                    <th id='benefmois'>Bénéfice Mensuel (&euro;)<span class="glyphicon glyphicon-sort"></span></th>
+                    <th id="benefsem">Bénéfice Hebdomadaire(&euro;)<span class="glyphicon glyphicon-sort"></span></th>
+                    <th>Bloquer</th>
+                    <th>Profil</th>
+                </tr>
+                <?php
+                /**
+                 * On effectue une requete pour avoir tous les utilisateur du site, et on les affiche dans un tableau (en excluant l'administrateur du site)
+                 */
+                $requete = $bdd->query("SELECT User_Type,id,prenom,nom,email,ville FROM utilisateur WHERE User_Type='nounou' OR User_Type='blocked'");
+                while ($donnees = $requete->fetch()) {
+                    if ($donnees['User_Type'] === 'nounou') {
+                        $benefmois = calculBenefNounouMois($donnees['id']);
+                        $benefsem = calculBenefNounouSemaine($donnees['id']);
+                        echo "<tr>\n\t<td>" . $donnees['prenom'] . "</td>\n<td>" . $donnees['nom'] . "</td>\n<td>" . $donnees['email'] . "</td>\n<td>" . $donnees['ville'] . "</td>\n<td>" . $benefmois . "</td>\n<td>" . $benefsem . "</td>\n<td>"
+                        . "<form method='POST' action='administration_traitement.php'>"
+                        . "<input type='submit' class='btn btn-warning' value='Bloquer' name='bloquer' onclick=\"return confirm('Vous allez bloquer cette personne, êtes vous sûr ?');\"/>"
+                        . "<input type='hidden' name='idblock' value='" . $donnees['id'] . "'/>"
+                        . "</form></td>\n"
+                        . "<td><a href='profil-nounou.php?nom=" . $donnees['nom'] . "'>Profil</a></td>\n</tr>";
+                    } else {
+                        echo "<tr>\n\t<td>" . $donnees['prenom'] . "</td>\n<td>" . $donnees['nom'] . "</td>\n<td>" . $donnees['email'] . "</td>\n<td>" . $donnees['ville'] . "</td>\n<td>" . $benefmois . "</td>\n<td>" . $benefsem . "</td>\n<td>"
+                        . "<form method='POST' action='administration_traitement.php'>"
+                        . "<input type='submit' class='btn btn-warning' value='Débloquer' name='debloquer' onclick=\"return confirm('Vous allez débloquer cette personne, êtes vous sûr ?');\"/>"
+                        . "<input type='hidden' name='idblock' value='" . $donnees['id'] . "'/>"
+                        . "</form></td>\n</tr>";
+                    }
+                }
+                $requete->closeCursor();
+                ?>
+            </table>
+        </div>
+        <div id='chiffre' style='display: none'>
+            <br/>
+            <h2>Les chiffres du site</h2>
+            <div class="col-md-4 text-center">
+                <div class="chiffre">
+                <h3><?= $nbNounou ?></h3> Nounous au total
+                </div>
+            </div><div class="col-md-4 text-center">
+                <div class="chiffre">
+                <h3><?= $nbUtilisateur ?></h3> Utilisateurs
+                </div>
+            </div><div class="col-md-4 text-center">
+                <div class="chiffre">
+                <h3><?= calculBenefTotal() ?></h3> &euro; de CA mensuel
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2"></div>
 </div>
 <?php
 
@@ -185,10 +203,10 @@ function calculBenefNounouMois($nounouId) {
     $sql = "SELECT debut_datetime, fin_datetime, id FROM prestation WHERE nounou_id=$nounouId AND debut_datetime BETWEEN '$month_start' AND '$month_end' AND type='ponctuelle'";
     $req = $bdd->query($sql);
     while ($res = $req->fetch()) {
-        $reqq=$bdd->query("SELECT COUNT(*) FROM prestation_has_enfant WHERE prestation_id=".$res['id']."");
-           $ress=$reqq->fetch();
-           //var_dump($ress);
-           $nb_enf = $ress['COUNT(*)'];
+        $reqq = $bdd->query("SELECT COUNT(*) FROM prestation_has_enfant WHERE prestation_id=" . $res['id'] . "");
+        $ress = $reqq->fetch();
+        //var_dump($ress);
+        $nb_enf = $ress['COUNT(*)'];
         $enddate = date_create_from_format("Y-m-d H:i:s", $res['fin_datetime']);
         $startdate = date_create_from_format("Y-m-d H:i:s", $res['debut_datetime']);
         $diffdate = date_diff($enddate, $startdate)->format('%h');
@@ -196,15 +214,15 @@ function calculBenefNounouMois($nounouId) {
         //var_dump($startdate);
         //var_dump($enddate);
         //var_dump($diffdate);
-        $benef_Ponc = $benef_Ponc + (7+4*$nb_enf) * intval($diffdate);
+        $benef_Ponc = $benef_Ponc + (7 + 4 * $nb_enf) * intval($diffdate);
     }
     $sql2 = "SELECT debut_datetime, fin_datetime, id FROM prestation WHERE nounou_id=$nounouId AND debut_datetime BETWEEN '$month_start' AND '$month_end' AND type='reguliere'";
     $req2 = $bdd->query($sql2);
     while ($res2 = $req2->fetch()) {
-        $reqq2=$bdd->query("SELECT COUNT(*) FROM prestation_has_enfant WHERE prestation_id=".$res2['id']."");
-           $ress2=$reqq2->fetch();
-           //var_dump($ress);
-           $nb_enf = $ress2['COUNT(*)'];
+        $reqq2 = $bdd->query("SELECT COUNT(*) FROM prestation_has_enfant WHERE prestation_id=" . $res2['id'] . "");
+        $ress2 = $reqq2->fetch();
+        //var_dump($ress);
+        $nb_enf = $ress2['COUNT(*)'];
         $enddate = date_create_from_format("Y-m-d H:i:s", $res2['fin_datetime']);
         $startdate = date_create_from_format("Y-m-d H:i:s", $res2['debut_datetime']);
         $diffdate = date_diff($enddate, $startdate)->format('%h');
@@ -212,16 +230,16 @@ function calculBenefNounouMois($nounouId) {
         //var_dump($startdate);
         //var_dump($enddate);
         //var_dump($diffdate);
-        $benef_Reg = $benef_Reg + (10+(($nb_enf-1)*5)) * intval($diffdate);
+        $benef_Reg = $benef_Reg + (10 + (($nb_enf - 1) * 5)) * intval($diffdate);
         //var_dump($benef_Reg);
     }
     $sql3 = "SELECT debut_datetime, fin_datetime, id FROM prestation WHERE nounou_id=$nounouId AND debut_datetime BETWEEN '$month_start' AND '$month_end' AND type='etrangere'";
     $req3 = $bdd->query($sql3);
     while ($res3 = $req3->fetch()) {
-        $reqq3=$bdd->query("SELECT COUNT(*) FROM prestation_has_enfant WHERE prestation_id=".$res3['id']."");
-           $ress3=$reqq3->fetch();
-           //var_dump($ress);
-           $nb_enf = $ress3['COUNT(*)'];
+        $reqq3 = $bdd->query("SELECT COUNT(*) FROM prestation_has_enfant WHERE prestation_id=" . $res3['id'] . "");
+        $ress3 = $reqq3->fetch();
+        //var_dump($ress);
+        $nb_enf = $ress3['COUNT(*)'];
         $enddate = date_create_from_format("Y-m-d H:i:s", $res3['fin_datetime']);
         $startdate = date_create_from_format("Y-m-d H:i:s", $res3['debut_datetime']);
         $diffdate = date_diff($enddate, $startdate)->format('%h');
@@ -289,13 +307,13 @@ function calculBenefTotal() {
                         if ($.isNumeric($.text([a])))
                         {
                             x = $.text([a]);
-                              
+
                             y = $.text([b]);
                             return (eval(x) > eval(y)) ? inverse ? -1 : 1 : inverse ? 1 : -1;
                         } else
                         {
                             return $.text([a]) > $.text([b]) ? inverse ? -1 : 1 : inverse ? 1 : -1;
-                            
+
                         }
 
                     }, function ()

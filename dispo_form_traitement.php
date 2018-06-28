@@ -38,7 +38,7 @@ foreach ($jours as $k => $value) {
                 $req = $bdd->exec("UPDATE disponibilite SET Debut = '" . $h_deb . "',Fin='" . $h_fin . "' WHERE utilisateur_id = " . $_SESSION['id'] . " AND jour = $k");
             }
             echo 'Vos horraires ont été enregistrés, vous allez être redirigé';
-            header('Refresh:2; url=accueil.php');
+            header('Location:profil.php');
         }
     }
 }
